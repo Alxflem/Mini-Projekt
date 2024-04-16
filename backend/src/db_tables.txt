@@ -1,0 +1,18 @@
+CREATE TABLE user_account (
+    id integer NOT NULL,
+    username varchar(30) NOT NULL,
+    password varchar(30) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE product (
+	id integer NOT NULL,
+	name varchar(50) NOT NULL,
+	type varchar(15) NOT NULL,
+	price integer NOT NULL,
+	production_date date,
+	color varchar(12) NOT NULL,
+	condition varchar(10) NOT NULL,
+    seller integer references user_account(id),
+    PRIMARY KEY(id)
+);
