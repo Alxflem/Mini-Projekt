@@ -7,14 +7,9 @@ def register_user(username, password):
         connection = db_instance.get_connection()
         cursor = connection.cursor()
 
-        cursor.execute("INSERT INTO user_account(username, password) VALUES ( " + username + ", " + password +")")
+        cursor.execute("INSERT INTO user_account (username, password) VALUES (%s, %s)", (username, password))
 
         connection.commit()
-
-        rows = cursor.fetchall()
-        
-        for row in rows:
-            print(row)
         cursor.close()
 
         db_instance.return_connection(connection)

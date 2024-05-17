@@ -14,8 +14,8 @@ class Database:
         if not self._initialized:
             self.connection_pool = psycopg2.pool.SimpleConnectionPool(
                 1, 20,  # Minimum 1 connection, maximum 20 connections
-                user="an4119",
-                password="gh796kh6",
+                user="an7008",
+                password="4kxawtib",
                 host="pgserver.mau.se",
                 port="5432",
                 database="g16_mini_project"
