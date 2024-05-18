@@ -49,9 +49,9 @@ img {
 
 main {
     display: flex;
-    justify-content: center; /* Horizontally centers the div */
-    align-items: center;   /* Vertically centers the div */
-    height: 100vh;         /* Makes the main element take full viewport height */
+    justify-content: center; 
+    align-items: center;   
+    height: 100vh;
         
 }
 

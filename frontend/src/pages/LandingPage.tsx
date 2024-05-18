@@ -2,12 +2,15 @@ import '../styling/LandingPage.css';
 import SearchBar from '../components/SearchBar';
 import ProductList from '../components/ProductList';
 import ViewProducts from '../components/ViewProducts';
+import LoginButton from '../components/LoginButton';
 
 
 const LandingPage = () => {
+
+
   return (
     <div className="landing-page">      
-
+        <LoginButton />
         <main className="main">
                 <div className="home__container container">
                     <div className="home__data">
