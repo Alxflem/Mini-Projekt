@@ -1,9 +1,9 @@
 import './App.css'
 import LandingPage from './pages/LandingPage';
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProductsPage from './pages/ProductsPage';
+import LoginPage from './pages/LoginPage';
 
 const App = () => {
   return (
@@ -12,7 +12,8 @@ const App = () => {
       
           <Router>
             <Routes>
-              <Route path="/welcome" element={<LandingPage />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<LoginPage />} />
               <Route path="/products" element={<ProductsPage />} />
             </Routes>
           </Router>

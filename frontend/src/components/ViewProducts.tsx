@@ -1,5 +1,4 @@
-import './ViewProducts.css';
-import React from 'react';
+import '../styling/ViewProducts.css';
 import { useNavigate } from 'react-router-dom';
 
 const ViewProducts = () => {

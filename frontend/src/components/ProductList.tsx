@@ -1,4 +1,4 @@
-import './ProductsList.css';
+import '../styling/ProductsList.css';
 
 const ProductList = () => {
 
