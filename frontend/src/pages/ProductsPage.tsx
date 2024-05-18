@@ -17,9 +17,9 @@ const sampleProducts: Product[] = [
   { id: 3, name: 'Product 3', price: 50, imageUrl: 'https://www.elgiganten.se/image/dv_web_D180001002981963/421041/acer-aspire-xc-840-cel8256-stationar-dator--pdp_main-640.jpg', category: 'Electronics' },
   { id: 4, name: 'Product 4', price: 40, imageUrl: 'https://www.elgiganten.se/image/dv_web_D180001002857550/361910/ipad-102-2021-64-gb-wifi-space-gray--pdp_main-640.jpg', category: 'Office' },
   { id: 5, name: 'Product 5', price: 25, imageUrl: 'https://www.elgiganten.se/image/dv_web_D1800010021602702/600844/tp-link-archer-ax1800-router--pdp_main-640.jpg', category: 'Office' },
-  { id: 6, name: 'Product 5', price: 25, imageUrl: 'https://www.elgiganten.se/image/dv_web_D1800010021602702/600844/tp-link-archer-ax1800-router--pdp_main-640.jpg', category: 'Office' },
-  { id: 7, name: 'Product 5', price: 25, imageUrl: 'https://www.elgiganten.se/image/dv_web_D1800010021602702/600844/tp-link-archer-ax1800-router--pdp_main-640.jpg', category: 'Office' },
-  { id: 8, name: 'Product 5', price: 25, imageUrl: 'https://www.elgiganten.se/image/dv_web_D1800010021602702/600844/tp-link-archer-ax1800-router--pdp_main-640.jpg', category: 'Office' },
+  { id: 6, name: 'Product 6', price: 32, imageUrl: 'https://www.elgiganten.se/image/dv_web_D1800010021478395/617386/asus-go-e410-celeron464-14-barbar-dator--pdp_main-640.jpg', category: 'Office' },
+  { id: 7, name: 'Product 7', price: 62, imageUrl: 'https://www.elgiganten.se/image/dv_web_D180001279653853/617388/asus-vivobook-go-15-athlon8128-156-barbar-dator--pdp_main-640.jpg', category: 'Office' },
+  { id: 8, name: 'Product 8', price: 12, imageUrl: 'https://www.elgiganten.se/image/dv_web_D1800010021474829/616620/lenovo-ideapad-slim-3-r516512-14-barbar-dator-arctic-grey--pdp_main-640.jpg', category: 'Office' },
 
   //we should change this so that it's products from the database
 ];
