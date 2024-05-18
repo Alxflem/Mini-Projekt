@@ -1,6 +1,8 @@
 import './LandingPage.css';
 import SearchBar from '../components/SearchBar';
 import ProductList from '../components/ProductList';
+import ViewProducts from '../components/ViewProducts';
+
 
 const LandingPage = () => {
   return (
@@ -16,6 +18,8 @@ const LandingPage = () => {
                         </p>
                         <SearchBar />
                         <ProductList />
+                        <ViewProducts />
+
                     </div>
                 </div>
         </main>
