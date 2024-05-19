@@ -15,7 +15,7 @@ const LoginPage = () => {
     const hardcodedPassword = "password123";
 
     if (email === hardcodedEmail && password === hardcodedPassword) {
-      navigate("/landing");
+      navigate("/landing", { state: { email } });
     } else {
       setError("Invalid email or password");
     }
