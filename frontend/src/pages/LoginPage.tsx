@@ -1,28 +1,31 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault();
 
     // Replace this with real authentication logic
-    const hardcodedEmail = 'test@example.com';
-    const hardcodedPassword = 'password123';
+    const hardcodedEmail = "test@example.com";
+    const hardcodedPassword = "password123";
 
     if (email === hardcodedEmail && password === hardcodedPassword) {
-      navigate('/home');
+      navigate("/home");
     } else {
-      setError('Invalid email or password');
+      setError("Invalid email or password");
     }
   };
 
   return (
-    <div id="maindiv" className="h-screen w-screen flex items-center justify-center">
+    <div
+      id="maindiv"
+      className="h-screen w-screen flex items-center justify-center"
+    >
       <div id="centerdiv" className="text-center p-10">
         <h1 className="py-10 text-4xl">Login Page</h1>
         <div className="bg-slate-300 border border-2 border-gray-500 p-10 rounded-xl shadow-sm">
