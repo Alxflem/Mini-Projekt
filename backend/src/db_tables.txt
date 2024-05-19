@@ -1,0 +1,23 @@
+CREATE TABLE user_account (
+    u_id SERIAL PRIMARY KEY,
+    username varchar(30) NOT NULL,
+    password varchar(30) NOT NULL,
+	birth_date date,
+	first_name varchar(15) NOT NULL,
+	last_name varchar(15) NOT NULL,
+	email varchar(30) NOT NULL
+);
+
+CREATE TABLE product (
+    p_id SERIAL PRIMARY KEY,
+    name varchar(50) NOT NULL,
+    type varchar(15) NOT NULL,
+    price integer NOT NULL,
+	image varchar,
+    production_date date,
+    color varchar(12) NOT NULL,
+    condition varchar(10) NOT NULL,
+	available boolean,
+    seller integer,
+    FOREIGN KEY (seller) REFERENCES user_account(u_id)
+);
