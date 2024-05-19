@@ -8,8 +8,6 @@ const LoginButton = () => {
   const email = location.state?.email || "guest";
 
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const userName = localStorage.getItem("userName");
 
   return (
     <div className="login-container">

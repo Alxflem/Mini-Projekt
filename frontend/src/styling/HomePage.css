@@ -1,0 +1,17 @@
+.store-title {
+    font-size: var(--biggest-font-size);
+    color: var(--first-color);
+    margin-left: 2%;
+  }
+  
+  .page-title {
+    margin-top: 2%;
+    margin-left: 5%;
+    margin-right: 6%;
+    margin-bottom: 2%;
+  
+    font-size: 1.5rem;
+    font-weight: 900;
+    border-bottom: 2px solid var(--first-color);
+    border-radius: 3px;
+  }

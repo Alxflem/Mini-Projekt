@@ -62,7 +62,7 @@ const ProductsPage: React.FC = () => {
   };
 
   const handleTitleClick = () => {
-    navigate('/');
+    navigate('/landing');
   };
 
 
