@@ -1,6 +1,7 @@
 import React from 'react';
 
 interface ProductCardProps {
+  id: number;
   name: string;
   price: number;
   imageUrl: string;

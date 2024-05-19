@@ -7,6 +7,29 @@ import LoginButton from "../components/LoginButton";
 
 const LandingPage = () => {
 
+  const products = [
+    {
+      id: 1,
+      name: "Headphones",
+      price: 99.99,
+      imageUrl: "https://example.com/headphones.jpg",
+      category: "Electronics",
+    },
+    {
+      id: 2,
+      name: "Laptop",
+      price: 799.99,
+      imageUrl: "https://example.com/laptop.jpg",
+      category: "Electronics",
+    },
+    {
+      id: 3,
+      name: "T-Shirt",
+      price: 19.99,
+      imageUrl: "https://example.com/tshirt.jpg",
+      category: "Clothing",
+    },
+  ];
 
   return (
     <div className="landing-page">

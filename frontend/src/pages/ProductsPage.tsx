@@ -95,11 +95,10 @@ const ProductsPage: React.FC = () => {
       <div className="products-grid">
         {filteredProducts.map(product => (
           <ProductCard
-            key={product.id}
+            id={product.id}
             name={product.name}
             price={product.price}
-            imageUrl={product.imageUrl}
-          />
+            imageUrl={product.imageUrl}/>
         ))}
       </div>
       </div>
