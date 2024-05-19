@@ -1,0 +1,13 @@
+.search-bar-container {
+    margin: 20px 0;
+    color: auto;
+  }
+  
+  .search-bar-input {
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
+    border-radius: 15px;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+  }
