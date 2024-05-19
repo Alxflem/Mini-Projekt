@@ -65,6 +65,13 @@ const LoginPage = () => {
             </button>
           </form>
         </div>
+        <div className="flex  items-center justify-center p-5">
+          <h1 className="sm px-4 ">Not a member yet?</h1>
+          <button className="h-10 w-35 border border-black rounded-xl hover:bg-slate-200 hover:shadow-xl" onClick={() => navigate('/reg')}>
+            {" "}
+            Register here
+          </button>
+        </div>
       </div>
     </div>
   );
