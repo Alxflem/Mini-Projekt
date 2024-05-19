@@ -7,8 +7,8 @@ def add_product(name, p_type, price, image_url, production_date, color, conditio
         connection = db_instance.get_connection()
         cursor = connection.cursor()
 
-        cursor.execute("INSERT INTO product (name, type, price, image, production_date, color, condition, seller) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                       (name, p_type, price, image_url, production_date, color, condition, seller))
+        cursor.execute("INSERT INTO product (name, type, price, image, production_date, color, condition, available, seller) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                       (name, p_type, price, image_url, production_date, color, condition, True, seller))
 
         connection.commit()
         cursor.close()
