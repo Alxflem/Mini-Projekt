@@ -7,14 +7,18 @@ import ProductsPage from "./pages/ProductsPage";
 import LoginPage from "./pages/LoginPage";
 import TestPage from "./pages/TestPage";
 import RegisterPage from "./pages/RegisterPage";
+
+import SellPage from "./pages/SellPage";
 import ProfilePage from './pages/HomePage';
 import Header, { CartItem } from './components/Header';
 import { useState } from 'react';
+
 
 const App = () => {
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   return (
+
       <div>
 
         <Router>
@@ -32,11 +36,13 @@ const App = () => {
             purchaseHistory: [],
           }} cartItems={cartItems} />} />
             <Route path="/products" element={<ProductsPage />} />
+            <Route path="/test" element={<TestPage />} />
+            <Route path="/sell" element={<SellPage />} />
           </Routes>
         </Router>
     
       </div>
-   
+
   );
 };
 ReactDOM.render(<App />, document.getElementById("root"));
