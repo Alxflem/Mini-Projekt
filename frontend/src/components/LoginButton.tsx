@@ -1,12 +1,10 @@
 import "../styling/LoginButton.css";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useUser } from '../components/UserContext';
 
 const LoginButton = () => {
-  const location = useLocation();
-  const email = location.state?.email || "guest";
-
   const navigate = useNavigate();
+  const { user } = useUser();
 
   return (
     <div className="login-container">
@@ -16,7 +14,7 @@ const LoginButton = () => {
           navigate("/profile");
         }}
       >
-        <p>{email}</p>
+        <p>{user?.email || "guest"}</p>
       </button>
     </div>
   );
