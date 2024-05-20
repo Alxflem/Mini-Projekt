@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from DatabaseConnection import Database
+from AddProduct import add_product
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
@@ -100,8 +101,22 @@ def create_product():
     if not product_data:
         return jsonify({"error": "Invalid input"}), 400
 
-    # Process the incoming product data
+    name = product_data.get('name')
+    product_type = product_data.get('type')
+    price = product_data.get('price')
+    image = product_data.get('image')
+    production_date = product_data.get('production_date')
+    color = product_data.get('color')
+    condition = product_data.get('condition')
+    seller = product_data.get('seller')
+
+    add_product(name, product_type, price, image, production_date, color, condition, seller)
+
     return jsonify({"message": "Product added successfully!", "product": product_data})
+
+    #add_product(name, product_type, price, image, production_date, color, condition, )
+
+    #return jsonify({"message": "Product added successfully!", "product": product_data})
 
 
 if __name__ == '__main__':

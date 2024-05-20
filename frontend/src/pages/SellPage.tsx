@@ -34,10 +34,8 @@ const SellPage = () => {
       image: imageUrl,
       production_date: productionDate,
       color,
-
       condition,
-      seller: user?.email,
-
+      seller: user?.email
     };
 
     try {
