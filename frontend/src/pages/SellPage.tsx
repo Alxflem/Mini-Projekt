@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const SellPage = () => {
@@ -13,6 +13,14 @@ const SellPage = () => {
   const [seller, setSeller] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  useEffect(() => {
+    // Fetch product types from API
+    axios
+      .get("http://localhost:8000/api/types")
+      .then((response) => setType(response.data))
+      .catch((error) => console.error("Error fetching types:", error));
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -127,27 +135,39 @@ const SellPage = () => {
               <label className="px-2" htmlFor="color">
                 Color
               </label>
-              <input
+              <select
                 className="border border-black p-2 w-full"
-                type="text"
                 id="color"
                 name="color"
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
-              />
+              >
+                <option value="">Select Color</option>
+                <option value="Red">Red</option>
+                <option value="Blue">Blue</option>
+                <option value="Green">Green</option>
+                <option value="Black">Black</option>
+                <option value="White">White</option>
+                <option value="Silver">Silver</option>
+              </select>
             </div>
             <div className="flex flex-col items-center">
               <label className="px-2" htmlFor="condition">
                 Condition
               </label>
-              <input
+              <select
                 className="border border-black p-2 w-full"
-                type="text"
                 id="condition"
                 name="condition"
                 value={condition}
                 onChange={(e) => setCondition(e.target.value)}
-              />
+                >
+                <option value="">Select Condition</option>
+                <option value="New">New</option>
+                <option value="Good">Good</option>
+                <option value="Mint">Mint</option>
+                <option value="Garbage">Garbage</option>
+                </select>
             </div>
 
             {error && <div className="text-red-500">{error}</div>}
