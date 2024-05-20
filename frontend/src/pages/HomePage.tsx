@@ -2,12 +2,13 @@ import '../styling/HomePage.css';
 import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Header, { CartItem } from "../components/Header";
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../components/UserContext';
 
+
 const UserProfile: React.FC = () => {
   const { user } = useUser();
+
   const navigate = useNavigate();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
