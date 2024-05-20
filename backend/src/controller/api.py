@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from DatabaseConnection import Database
+from Registration import register_user 
+
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
@@ -104,17 +106,26 @@ def create_product():
     return jsonify({"message": "Product added successfully!", "product": product_data})
 
 @app.route('/api/reg_user', methods=['POST'])
-def register_user():
+def register_user_endpoint():
     user_data = request.get_json()
-
-    print(user_data)
 
     if not user_data:
         return jsonify({"error": "Invalid input"}), 400
 
-    # Process the incoming product data
-    return jsonify({"message": "Product added successfully!", "product": user_data})
+    required_fields = ["username", "password", "birth_date", "first_name", "last_name", "email"]
+    if not all(field in user_data for field in required_fields):
+        return jsonify({"error": "Missing fields"}), 400
 
+    result, status = register_user(
+        user_data["username"], 
+        user_data["password"], 
+        user_data["birth_date"], 
+        user_data["first_name"], 
+        user_data["last_name"], 
+        user_data["email"]
+    )
+
+    return jsonify(result), status
 
 if __name__ == '__main__':
     app.run(debug=True)
