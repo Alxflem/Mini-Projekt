@@ -22,5 +22,3 @@ def login_user(email, password):
             cursor.close()
         if connection:
             db_instance.return_connection(connection)
-        if db_instance:
-            db_instance.close_all_connections()
