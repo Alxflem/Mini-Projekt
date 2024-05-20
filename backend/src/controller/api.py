@@ -85,14 +85,14 @@ def receive_products():
 def receive_types():
     return get_types()
 
-@app.route('/api/register', methods=['POST'])
-def
+#@app.route('/api/register', methods=['POST'])
+#def
 
-@app.route('/api/login', methods=['POST'])
-def
+#@app.route('/api/login', methods=['POST'])
+#def
 
-@app.route('/api/add_product', methods=['POST'])
-def
+#@app.route('/api/add_product', methods=['POST'])
+#def
 
 if __name__ == '__main__':
     app.run(debug=True)
