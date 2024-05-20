@@ -103,6 +103,18 @@ def create_product():
     # Process the incoming product data
     return jsonify({"message": "Product added successfully!", "product": product_data})
 
+@app.route('/api/reg_user', methods=['POST'])
+def register_user():
+    user_data = request.get_json()
+
+    print(user_data)
+
+    if not user_data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    # Process the incoming product data
+    return jsonify({"message": "Product added successfully!", "product": user_data})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
