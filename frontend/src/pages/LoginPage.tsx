@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -7,19 +8,25 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    // Replace this with real authentication logic
-    const hardcodedEmail = "test@example.com";
-    const hardcodedPassword = "password123";
-
-    if (email === hardcodedEmail && password === hardcodedPassword) {
-      navigate("/landing", { state: { email } });
-    } else {
-      setError("Invalid email or password");
-    }
+    const loginData = {
+      email,
+      password
   };
+
+  try {
+    const response = await axios.post("http://localhost:5000/api/login", loginData);
+    if (response.data.message === "Login successful!") {
+        navigate("/landing", { state: { email } });
+    } else {
+        setError("Invalid email or password");
+    }
+  } catch (error) {
+    setError("Failed to login.");
+  }
+};
 
   return (
     <div
