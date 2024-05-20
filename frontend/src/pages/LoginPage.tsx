@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../components/UserContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault();
@@ -15,7 +17,16 @@ const LoginPage = () => {
     const hardcodedPassword = "password123";
 
     if (email === hardcodedEmail && password === hardcodedPassword) {
-      navigate("/landing", { state: { email } });
+      setUser({
+        firstName: "Tester",
+        lastName: "Testerson",
+        dateOfBirth: "06/02/2003",
+        email,
+        username: "testerino",
+        password,
+        purchaseHistory: [],
+      });
+      navigate("/landing");
     } else {
       setError("Invalid email or password");
     }
@@ -67,7 +78,10 @@ const LoginPage = () => {
         </div>
         <div className="flex  items-center justify-center p-5">
           <h1 className="sm px-4 ">Not a member yet?</h1>
-          <button className="h-10 w-35 border border-black rounded-xl hover:bg-slate-200 hover:shadow-xl" onClick={() => navigate('/reg')}>
+          <button
+            className="h-10 w-35 border border-black rounded-xl hover:bg-slate-200 hover:shadow-xl"
+            onClick={() => navigate("/reg")}
+          >
             {" "}
             Register here
           </button>

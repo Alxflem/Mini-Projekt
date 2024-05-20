@@ -159,13 +159,13 @@ const SellPage = () => {
                 name="condition"
                 value={condition}
                 onChange={(e) => setCondition(e.target.value)}
-                >
+              >
                 <option value="">Select Condition</option>
                 <option value="New">New</option>
                 <option value="Good">Good</option>
                 <option value="Mint">Mint</option>
                 <option value="Garbage">Garbage</option>
-                </select>
+              </select>
             </div>
 
             {error && <div className="text-red-500">{error}</div>}
