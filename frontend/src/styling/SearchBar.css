@@ -4,9 +4,10 @@
   }
   
   .search-bar-input {
+    width: 17.3%;
     padding: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
     border-radius: 15px;
+    border: solid 1px black;
     margin-top: 8px;
     margin-right: 16px;
     font-size: 17px;
