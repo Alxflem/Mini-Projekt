@@ -18,7 +18,6 @@ const LandingPage = () => {
             <p className="home__description">
               Your local store with nerd stuff!
             </p>
-            <ProductList />
             <ViewProducts />
           </div>
         </div>

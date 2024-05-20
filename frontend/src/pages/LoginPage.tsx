@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUser } from "../components/UserContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -20,6 +22,7 @@ const LoginPage = () => {
     const response = await axios.post("http://localhost:5000/api/login", loginData);
     if (response.data.message === "Login successful!") {
         navigate("/landing", { state: { email } });
+
     } else {
         setError("Invalid email or password");
     }
@@ -74,7 +77,10 @@ const LoginPage = () => {
         </div>
         <div className="flex  items-center justify-center p-5">
           <h1 className="sm px-4 ">Not a member yet?</h1>
-          <button className="h-10 w-35 border border-black rounded-xl hover:bg-slate-200 hover:shadow-xl" onClick={() => navigate('/reg')}>
+          <button
+            className="h-10 w-35 border border-black rounded-xl hover:bg-slate-200 hover:shadow-xl"
+            onClick={() => navigate("/reg")}
+          >
             {" "}
             Register here
           </button>

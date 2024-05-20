@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useUser } from '../components/UserContext';
 
 const SellPage = () => {
   const [productName, setProductName] = useState("");
@@ -13,6 +14,7 @@ const SellPage = () => {
   const [seller, setSeller] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const { user } = useUser();
 
   useEffect(() => {
     // Fetch product types from API
@@ -27,12 +29,13 @@ const SellPage = () => {
 
     const productData = {
       name: productName,
-      type,
-      price,
+      type: type,
+      price: price,
       image: imageUrl,
       production_date: productionDate,
-      color,
-      condition
+      color: color,
+      condition: condition,
+      seller: user?.email
     };
 
     try {
@@ -159,13 +162,13 @@ const SellPage = () => {
                 name="condition"
                 value={condition}
                 onChange={(e) => setCondition(e.target.value)}
-                >
+              >
                 <option value="">Select Condition</option>
                 <option value="New">New</option>
                 <option value="Good">Good</option>
                 <option value="Mint">Mint</option>
                 <option value="Garbage">Garbage</option>
-                </select>
+              </select>
             </div>
 
             {error && <div className="text-red-500">{error}</div>}

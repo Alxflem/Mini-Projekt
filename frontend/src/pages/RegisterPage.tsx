@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,11 +11,34 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmpassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  const handleRegister = (event: React.FormEvent) => {
+
+
+  const handleRegister = async (event: React.FormEvent) => {
     event.preventDefault();
-    // Basic validation for example
+    event.preventDefault();
+
+    const userData = {
+      username: username,
+      password: password,
+      birth_date: dateofbirth,
+      first_name: firstname,
+      last_name: lastname,
+      email: email,
+    };
+
+    try {
+      
+      await axios.post("http://localhost:5000/api/reg_user", userData);
+      setSuccess("User added successfully!");
+      setError("");
+    } catch (error) {
+      setError("Failed to add user.");
+      setSuccess("");
+    }
+    
     if (
       password !== confirmPassword &&
       password.length > 0 &&
@@ -23,8 +47,7 @@ const RegisterPage = () => {
       setError("Passwords do not match");
       return;
     }
-    // Placeholder for real registration logic
-    alert("Registration successful!");
+      setSuccess("Registration successful!");
     navigate("/");
   };
 
