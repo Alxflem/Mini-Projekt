@@ -1,25 +1,26 @@
 CREATE TABLE user_account (
     u_id SERIAL PRIMARY KEY,
-    username varchar(30) NOT NULL,
-    password varchar(30) NOT NULL,
-	birth_date date,
-	first_name varchar(15) NOT NULL,
-	last_name varchar(15) NOT NULL,
-	email varchar(30) NOT NULL
+    username VARCHAR(30) NOT NULL,
+    password VARCHAR(30) NOT NULL,
+	birth_date DATE,
+	first_name VARCHAR(15) NOT NULL,
+	last_name VARCHAR(15) NOT NULL,
+	email VARCHAR(30) NOT NULL,
+
 );
 
 CREATE TABLE product (
     p_id SERIAL PRIMARY KEY,
-    name varchar(50) NOT NULL,
-    type integer,
+    name VARCHAR(50) NOT NULL,
+    type INTEGER,
 	FOREIGN KEY (type) REFERENCES product_type(pt_id),
-    price integer NOT NULL,
-	image varchar,
-    production_date date,
-    color varchar(12) NOT NULL,
-    condition varchar(10) NOT NULL,
-	available boolean,
-    seller integer,
+    price INTEGER NOT NULL,
+	image VARCHAR,
+    production_date DATE,
+    color VARCHAR(12) NOT NULL,
+    condition VARCHAR(10) NOT NULL,
+	available BOOLEAN,
+    seller INTEGER,
     FOREIGN KEY (seller) REFERENCES user_account(u_id)
 );
 

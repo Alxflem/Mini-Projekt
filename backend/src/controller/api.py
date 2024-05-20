@@ -46,6 +46,7 @@ def get_products():
         if connection:
             db_instance.return_connection(connection)
 
+
 def get_types():
     connection = None
     cursor = None
@@ -75,6 +76,7 @@ def get_types():
         if connection:
             db_instance.return_connection(connection)
 
+
 @app.route('/api/products', methods=['GET'])
 def receive_products():
     return get_products()
@@ -82,6 +84,15 @@ def receive_products():
 @app.route('/api/types', methods=['GET'])
 def receive_types():
     return get_types()
+
+@app.route('/api/register', methods=['POST'])
+def
+
+@app.route('/api/login', methods=['POST'])
+def
+
+@app.route('/api/add_product', methods=['POST'])
+def
 
 if __name__ == '__main__':
     app.run(debug=True)
