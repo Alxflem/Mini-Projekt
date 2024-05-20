@@ -105,10 +105,13 @@ def verify_login():
     if not email or not password:
         return jsonify({"error": "Username and password required"}), 400
 
-    if login_user(email, password):
-        return jsonify({"message": "Login successful!"}), 200
+    user_data = login_user(email, password)
+    if user_data:
+        return jsonify({"message": "Login successful!", "user": user_data}), 200
     else:
         return jsonify({"error": "Invalid username or password"}), 401
+
+
 
 @app.route('/api/add_product', methods=['POST'])
 def register_product_endpoint():

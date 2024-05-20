@@ -15,21 +15,26 @@ const LoginPage = () => {
 
     const loginData = {
       email,
-      password
-  };
+      password,
+    };
 
-  try {
-    const response = await axios.post("http://localhost:5000/api/login", loginData);
-    if (response.data.message === "Login successful!") {
-        navigate("/landing", { state: { email } });
-
-    } else {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/login",
+        loginData
+      );
+      if (response.data.message === "Login successful!") {
+        const userData = response.data.user; // Assuming your API returns user data in response.data.user
+        console.log(userData);
+        setUser(userData); // Set the user data in the context
+        navigate("/landing");
+      } else {
         setError("Invalid email or password");
+      }
+    } catch (error) {
+      setError("Failed to login.");
     }
-  } catch (error) {
-    setError("Failed to login.");
-  }
-};
+  };
 
   return (
     <div

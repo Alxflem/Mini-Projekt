@@ -1,6 +1,6 @@
 from DatabaseConnection import Database
 
-def add_product(name, p_type, price, image_url, production_date, color, condition):
+def add_product(name, p_type, price, image_url, production_date, color, condition, seller):
 
     try:
         db_instance = Database.get_instance()
