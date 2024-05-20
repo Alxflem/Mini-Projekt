@@ -33,8 +33,6 @@ const SellPage = () => {
       production_date: productionDate,
       color,
       condition,
-      available,
-      seller,
     };
 
     try {
