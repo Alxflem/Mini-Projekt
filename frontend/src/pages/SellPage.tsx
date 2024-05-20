@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useUser } from '../components/UserContext';
 
 const SellPage = () => {
   const [productName, setProductName] = useState("");
@@ -13,6 +14,7 @@ const SellPage = () => {
   const [seller, setSeller] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const { user } = useUser();
 
   useEffect(() => {
     // Fetch product types from API
@@ -33,6 +35,7 @@ const SellPage = () => {
       production_date: productionDate,
       color,
       condition,
+      seller: user?.email,
     };
 
     try {
