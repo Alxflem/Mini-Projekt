@@ -5,12 +5,14 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProductsPage from './pages/ProductsPage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/HomePage';
+import Header, { CartItem } from './components/Header';
+import { useState } from 'react';
 const App = () => {
 
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   return (
-  
       <div>
-      
+
         <Router>
           <Routes>
             <Route path="/landing" element={<LandingPage />} />
@@ -23,8 +25,7 @@ const App = () => {
             username: 'testerino',
             password: 'password123',
             purchaseHistory: [],
-            sellingItems: []
-          }} />} />
+          }} cartItems={cartItems} />} />
             <Route path="/products" element={<ProductsPage />} />
           </Routes>
         </Router>

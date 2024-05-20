@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import ProductCard from '../components/ProductCard';
 import '../styling/ProductsPage.css';
-import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
+import { CartItem } from '../components/Header'; // Import CartItem type from Header
+import SearchBar from '../components/SearchBar';
 
 interface Product {
   id: number;
@@ -25,12 +27,33 @@ const sampleProducts: Product[] = [
 ];
 
 const ProductsPage: React.FC = () => {
-  const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>(sampleProducts);
   const [sortType, setSortType] = useState<string>('alphabetical');
+  const [cartItems, setCartItems] = useState<CartItem[]>([]); // Initialize cart items state
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
 
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
 
+  const addToCart = (name: string, price: number, imageUrl: string) => {
+    const newItem: CartItem = {
+      id: cartItems.length + 1,
+      name,
+      quantity: 1,
+      imageUrl, // Add imageUrl to the new item
+      price,
+    };
+
+    console.log(newItem); //works
+    setCartItems(prevCartItems => [...prevCartItems, newItem]); // Update state with new array
+    cartItems.forEach(newItem => {
+      console.log("Added: " + newItem.name);
+    });
+  }
+
+  const removeFromCart = (id: number) => {
+    setCartItems(cartItems.filter(item => item.id !== id));
+  };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sortValue = e.target.value;
@@ -61,16 +84,18 @@ const ProductsPage: React.FC = () => {
     return sortedProducts;
   };
 
-  const handleTitleClick = () => {
-    navigate('/landing');
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    const filtered = filteredProducts.filter((product) => product.name.toLowerCase().includes(query.toLowerCase()));
+    setFilteredProducts(filtered);
   };
 
 
   return (
     <div className="products-list-page">
-      <h1 className="store-title" onClick={handleTitleClick} style={{ cursor: 'pointer' }}>NerdStore</h1>
+      <Header cartItems={cartItems} removeFromCart={removeFromCart} />
       <h1 className='page-title'>Products List</h1>
-
+      <div className='search-bar'><SearchBar onSearch={handleSearch}/></div>
       <div className='products-container'>
       <div className="sort-options">
         <label htmlFor="sort">Sort by: </label>
@@ -92,15 +117,18 @@ const ProductsPage: React.FC = () => {
         </select>
     </div>
 
-      <div className="products-grid">
-        {filteredProducts.map(product => (
-          <ProductCard
-            id={product.id}
-            name={product.name}
-            price={product.price}
-            imageUrl={product.imageUrl}/>
-        ))}
-      </div>
+    <div className="products-grid">
+          {filteredProducts.map(product => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              price={product.price}
+              imageUrl={product.imageUrl}
+              onAddToCart={addToCart}
+              />
+          ))}
+        </div>
       </div>
     </div>
   );

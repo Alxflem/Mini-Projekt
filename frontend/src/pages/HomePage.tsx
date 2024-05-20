@@ -1,28 +1,29 @@
 
 import '../styling/HomePage.css';
-import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Header, { CartItem } from "../components/Header";
+import { useNavigate } from 'react-router-dom';
 
 interface UserProfileProps {
   userData: {
     firstName: string;
     lastName: string;
-    dateOfBirth: string; // Assuming date of birth is stored as a string
+    dateOfBirth: string; 
     email: string;
     username: string;
-    password: string; // Consider not storing password directly (security concerns)
-    purchaseHistory: PurchaseHistoryItem[]; // Define PurchaseHistoryItem interface
+    password: string;
+    purchaseHistory: PurchaseHistoryItem[];
   };
+  cartItems: CartItem[];
 }
 
 interface PurchaseHistoryItem {
   id: number;
   productName: string;
   purchaseDate: string;
-  price: number; // Optional property for price
-  // Define properties for each purchase history item (e.g., product name, date)
+  price: number;
 }
 
 const examplePurchaseHistory = [
@@ -36,27 +37,18 @@ const examplePurchaseHistory = [
   { id: 8, productName: "Product H", purchaseDate: "2004-01-11", price: 30 },
 ];
 
-const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
+const UserProfile: React.FC<UserProfileProps> = ({ userData}) => {
 
   const navigate = useNavigate();
-
-  const handleTitleClick = () => {
-    navigate('/landing');
-  };
-
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
   const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
-
   const passwordDisplay = isPasswordVisible ? userData.password : '*'.repeat(userData.password.length);
-
-
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [filteredPurchases, setFilteredPurchases] = useState(examplePurchaseHistory);
-
   const handleStartDateChange = (date: Date | null) => setStartDate(date);
   const handleEndDateChange = (date: Date | null) => setEndDate(date);
+
 
   const filterPurchases = () => {
     if (!startDate || !endDate) return;
@@ -68,9 +60,15 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
 
     setFilteredPurchases(filteredData);
   };
+  const handleTitleClick = () => {
+    navigate('/landing');
+  };
+
   return (
     <div className="user-profile">
-      <h1 className="store-title" onClick={handleTitleClick} style={{ cursor: 'pointer' }}>NerdStore</h1>
+        <h1 className="store-title" onClick={handleTitleClick} style={{ cursor: 'pointer' }}>
+          NerdStore
+        </h1>
       <h1 className='page-title'>Your Account Details</h1>
       <div className='user-profile-content'>
       <div className='user-info'>
