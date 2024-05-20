@@ -13,13 +13,11 @@ interface Product {
   category: string;
 }
 
-
-
 const ProductsPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);  
   const [sortType, setSortType] = useState<string>('alphabetical');
-  const [cartItems, setCartItems] = useState<CartItem[]>([]); // Initialize cart items state
+  const [cartItems, setCartItems] = useState<CartItem[]>([]); 
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   useEffect(() => {
@@ -28,7 +26,7 @@ const ProductsPage: React.FC = () => {
   
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/products'); // Replace '/api/products' with your actual API endpoint
+      const response = await fetch('http://localhost:5000/api/products');
       if (response.ok) {
         const data = await response.json();
         setProducts(data);

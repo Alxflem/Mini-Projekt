@@ -1,7 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from DatabaseConnection import Database
-from Registration import register_user 
+from Registration import register_user
+from AddProduct import add_product
 
 
 app = Flask(__name__)
@@ -87,23 +88,30 @@ def receive_products():
 def receive_types():
     return get_types()
 
-#@app.route('/api/register', methods=['POST'])
-#def
-
-#@app.route('/api/login', methods=['POST'])
-#def
-
 @app.route('/api/add_product', methods=['POST'])
-def create_product():
+def register_product_endpoint():
     product_data = request.get_json()
 
-    print(product_data)
-
     if not product_data:
+        print("Invalid input")
         return jsonify({"error": "Invalid input"}), 400
 
-    # Process the incoming product data
-    return jsonify({"message": "Product added successfully!", "product": product_data})
+    required_fields = ["name", "type", "price", "image", "production_date", "color", "condition"]
+    if not all(field in product_data for field in required_fields):
+        print("Missing fields")
+        return jsonify({"error": "Missing fields"}), 400
+
+    result, status = add_product(
+        product_data["name"],
+        product_data["type"],
+        product_data["price"],
+        product_data["image"],
+        product_data["production_date"],
+        product_data["color"],
+        product_data["condition"],
+    )
+
+    return jsonify(result), status
 
 @app.route('/api/reg_user', methods=['POST'])
 def register_user_endpoint():

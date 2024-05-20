@@ -1,52 +1,65 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import '../styling/ProductsList.css';
 
+// Define interface for product
+interface Product {
+  p_id: number;
+  name: string;
+  price: number;
+  image: string;
+  // Add other attributes here
+}
+
 const ProductList = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    axios.get<{ data: Product[] }>('http://localhost:5000/api/products')
+      .then(response => {
+        console.log('API response:', response.data);
+        setProducts(response.data.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching products:', error);
+        setError('Error fetching products');
+        setLoading(false);
+      });
+  }, []); //empty dependency array ensures this effect runs only once, similar to componentDidMount
+
+  useEffect(() => {
+    console.log('Products state:', products); 
+  }, [products]); //log products state whenever it changes
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  // Check if products is truthy and an array before rendering
+  if (!products || products.length === 0) {
+    return <div>No products available</div>;
+  }
 
   return (
     <div className="product-list">
       <section className="product-row">
-    <a href='link to product page'>
-      <div className="product-card">
-        
-        <img src="https://www.elgiganten.se/image/dv_web_D1800010021271907/LTMK545/logitech-mk545-tangentbord-och-mus--pdp_main-640.jpg" alt="Product 1"/>
-        <h3 className="product-title">Product Title</h3>
-        <p className="product-price">$49.99</p>
-      </div>
-    </a>
-
-    <a href='link to product page'>  
-      <div className="product-card">
-        <img src="https://www.elgiganten.se/image/dv_web_D1800010021823789/764589/hp-laptop-i38128-156-barbar-dator--pdp_main-640.jpg" alt="Product 2"/>
-        <h3 className="product-title">Product Title</h3>
-        <p className="product-price">$29.99</p>
-      </div>
-    </a>
-
-    <a href='link to product page'>
-      <div className="product-card">
-        <img src="https://www.elgiganten.se/image/dv_web_D180001002981963/421041/acer-aspire-xc-840-cel8256-stationar-dator--pdp_main-640.jpg" alt="Product 3"/>
-        <h3 className="product-title">Product Title</h3>
-        <p className="product-price">$79.99</p>
-      </div>
-    </a>
-
-    <a href='link to product page'>
-      <div className="product-card">
-        <img src="https://www.elgiganten.se/image/dv_web_D180001002857550/361910/ipad-102-2021-64-gb-wifi-space-gray--pdp_main-640.jpg" alt="Product 4"/>
-        <h3 className="product-title">Product Title</h3>
-        <p className="product-price">$19.99</p>
-      </div>
-    </a>
-
-    <a href='link to product page'>
-      <div className="product-card">
-        <img src="https://www.elgiganten.se/image/dv_web_D1800010021602702/600844/tp-link-archer-ax1800-router--pdp_main-640.jpg" alt="Product 5"/>
-        <h3 className="product-title">Product Title</h3>
-        <p className="product-price">$39.99</p>
-      </div>
-    </a>
-    
-  </section>
+        {products.map(product => (
+          <a href="" key={product.p_id}>
+            <div className="product-card">
+              <img src={product.image} alt={product.name} />
+              <h3 className="product-title">{product.name}</h3>
+              <p className="product-price">${product.price}</p>
+            </div>
+          </a>
+        ))}
+      </section>
     </div>
   );
 };
