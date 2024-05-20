@@ -64,3 +64,7 @@ main {
 .home__data {
     text-align: center;
 }
+
+.home__description {
+  margin-bottom: 2%;
+}

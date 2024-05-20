@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from DatabaseConnection import Database
+from Registration import register_user
 from AddProduct import add_product
 
 app = Flask(__name__)
@@ -86,37 +87,52 @@ def receive_products():
 def receive_types():
     return get_types()
 
-#@app.route('/api/register', methods=['POST'])
-#def
-
-#@app.route('/api/login', methods=['POST'])
-#def
-
 @app.route('/api/add_product', methods=['POST'])
-def create_product():
+def register_product_endpoint():
     product_data = request.get_json()
 
-    print(product_data)
-
     if not product_data:
+        print("Invalid input")
         return jsonify({"error": "Invalid input"}), 400
 
-    name = product_data.get('name')
-    product_type = product_data.get('type')
-    price = product_data.get('price')
-    image = product_data.get('image')
-    production_date = product_data.get('production_date')
-    color = product_data.get('color')
-    condition = product_data.get('condition')
-    seller = product_data.get('seller')
+    required_fields = ["name", "type", "price", "image", "production_date", "color", "condition"]
+    if not all(field in product_data for field in required_fields):
+        print("Missing fields")
+        return jsonify({"error": "Missing fields"}), 400
 
-    add_product(name, product_type, price, image, production_date, color, condition, seller)
+    result, status = add_product(
+        product_data["name"],
+        product_data["type"],
+        product_data["price"],
+        product_data["image"],
+        product_data["production_date"],
+        product_data["color"],
+        product_data["condition"],
+    )
 
-    return jsonify({"message": "Product added successfully!", "product": product_data})
+    return jsonify(result), status
 
-    #add_product(name, product_type, price, image, production_date, color, condition, )
+@app.route('/api/reg_user', methods=['POST'])
+def register_user_endpoint():
+    user_data = request.get_json()
 
-    #return jsonify({"message": "Product added successfully!", "product": product_data})
+    if not user_data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    required_fields = ["username", "password", "birth_date", "first_name", "last_name", "email"]
+    if not all(field in user_data for field in required_fields):
+        return jsonify({"error": "Missing fields"}), 400
+
+    result, status = register_user(
+        user_data["username"], 
+        user_data["password"], 
+        user_data["birth_date"], 
+        user_data["first_name"], 
+        user_data["last_name"], 
+        user_data["email"]
+    )
+
+    return jsonify(result), status
 
 
 if __name__ == '__main__':

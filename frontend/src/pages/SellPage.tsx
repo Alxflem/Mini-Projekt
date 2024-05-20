@@ -29,12 +29,12 @@ const SellPage = () => {
 
     const productData = {
       name: productName,
-      type,
-      price,
+      type: type,
+      price: price,
       image: imageUrl,
       production_date: productionDate,
-      color,
-      condition,
+      color: color,
+      condition: condition,
       seller: user?.email
     };
 
