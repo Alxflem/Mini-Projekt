@@ -37,7 +37,7 @@ const SellPage = () => {
 
     try {
       // Replace this with the actual URL of your Python API endpoint
-      await axios.post("http://localhost:5000//api/add_product", productData);
+      await axios.post("http://localhost:5000/api/add_product", productData);
       setSuccess("Product added successfully!");
       setError("");
     } catch (error) {
