@@ -4,7 +4,6 @@ from DatabaseConnection import Database
 from Registration import register_user
 from AddProduct import add_product
 
-
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
 
@@ -134,6 +133,7 @@ def register_user_endpoint():
     )
 
     return jsonify(result), status
+
 
 if __name__ == '__main__':
     app.run(debug=True)
