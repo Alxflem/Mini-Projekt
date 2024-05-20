@@ -1,12 +1,16 @@
-import './App.css'
-import LandingPage from './pages/LandingPage';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ProductsPage from './pages/ProductsPage';
-import LoginPage from './pages/LoginPage';
+
+import "./App.css";
+import LandingPage from "./pages/LandingPage";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ProductsPage from "./pages/ProductsPage";
+import LoginPage from "./pages/LoginPage";
+import TestPage from "./pages/TestPage";
+import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from './pages/HomePage';
 import Header, { CartItem } from './components/Header';
 import { useState } from 'react';
+
 const App = () => {
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -15,8 +19,9 @@ const App = () => {
 
         <Router>
           <Routes>
-            <Route path="/landing" element={<LandingPage />} />
             <Route path="/" element={<LoginPage />} />
+            <Route path="/landing" element={<LandingPage />} />
+            <Route path="/reg" element={<RegisterPage />} />
             <Route path="/profile" element={<ProfilePage userData={{
             firstName: 'Tester',
             lastName: 'Testerson',
@@ -31,9 +36,9 @@ const App = () => {
         </Router>
     
       </div>
-    
+   
   );
 };
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));
 
 export default App;
