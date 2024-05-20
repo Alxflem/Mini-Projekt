@@ -3,7 +3,6 @@ import '../styling/HomePage.css';
 import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Header, { CartItem } from "../components/Header";
 import { useNavigate } from 'react-router-dom';
 
 interface UserProfileProps {
@@ -16,7 +15,6 @@ interface UserProfileProps {
     password: string;
     purchaseHistory: PurchaseHistoryItem[];
   };
-  cartItems: CartItem[];
 }
 
 interface PurchaseHistoryItem {
