@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const SellPage = () => {
-  const [productName, setProductName] = useState('');
-  const [type, setType] = useState('');
-  const [price, setPrice] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [productionDate, setProductionDate] = useState('');
-  const [color, setColor] = useState('');
-  const [condition, setCondition] = useState('');
+  const [productName, setProductName] = useState("");
+  const [type, setType] = useState("");
+  const [price, setPrice] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [productionDate, setProductionDate] = useState("");
+  const [color, setColor] = useState("");
+  const [condition, setCondition] = useState("");
   const [available, setAvailable] = useState(false);
-  const [seller, setSeller] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [seller, setSeller] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -31,23 +31,28 @@ const SellPage = () => {
 
     try {
       // Replace this with the actual URL of your Python API endpoint
-      await axios.post('http://localhost:8000/api/products', productData);
-      setSuccess('Product added successfully!');
-      setError('');
+      await axios.post("http://localhost:8000/api/products", productData);
+      setSuccess("Product added successfully!");
+      setError("");
     } catch (error) {
-      setError('Failed to add product.');
-      setSuccess('');
+      setError("Failed to add product.");
+      setSuccess("");
     }
   };
 
   return (
-    <div id="maindiv" className="h-screen w-screen flex items-center justify-center">
-      <div id="centerdiv" className="text-center p-10">
+    <div
+      id="maindiv"
+      className="h-screen w-screen flex items-center justify-center"
+    >
+      <div id="centerdiv " className="text-center p-10 w-full max-w-3xl">
         <h1 className="py-10 text-4xl">Sell a Product</h1>
         <div className="bg-slate-300 border border-2 border-gray-500 p-10 rounded-xl shadow-sm w-full max-w-3xl">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex flex-col items-center">
-              <label className="px-2" htmlFor="productName">Product Name</label>
+              <label className="px-2" htmlFor="productName">
+                Product Name
+              </label>
               <input
                 className="border border-black p-2 w-full"
                 type="text"
@@ -58,7 +63,9 @@ const SellPage = () => {
               />
             </div>
             <div className="flex flex-col items-center">
-              <label className="px-2" htmlFor="type">Type</label>
+              <label className="px-2" htmlFor="type">
+                Type
+              </label>
               <input
                 className="border border-black p-2 w-full"
                 type="text"
@@ -69,7 +76,9 @@ const SellPage = () => {
               />
             </div>
             <div className="flex flex-col items-center">
-              <label className="px-2" htmlFor="price">Price</label>
+              <label className="px-2" htmlFor="price">
+                Price
+              </label>
               <input
                 className="border border-black p-2 w-full"
                 type="number"
@@ -80,7 +89,9 @@ const SellPage = () => {
               />
             </div>
             <div className="flex flex-col items-center">
-              <label className="px-2" htmlFor="imageUrl">Image URL</label>
+              <label className="px-2" htmlFor="imageUrl">
+                Image URL
+              </label>
               <input
                 className="border border-black p-2 w-full"
                 type="text"
@@ -100,7 +111,9 @@ const SellPage = () => {
               </div>
             )}
             <div className="flex flex-col items-center">
-              <label className="px-2" htmlFor="productionDate">Production Date</label>
+              <label className="px-2" htmlFor="productionDate">
+                Production Date
+              </label>
               <input
                 className="border border-black p-2 w-full"
                 type="date"
@@ -111,7 +124,9 @@ const SellPage = () => {
               />
             </div>
             <div className="flex flex-col items-center">
-              <label className="px-2" htmlFor="color">Color</label>
+              <label className="px-2" htmlFor="color">
+                Color
+              </label>
               <input
                 className="border border-black p-2 w-full"
                 type="text"
@@ -122,7 +137,9 @@ const SellPage = () => {
               />
             </div>
             <div className="flex flex-col items-center">
-              <label className="px-2" htmlFor="condition">Condition</label>
+              <label className="px-2" htmlFor="condition">
+                Condition
+              </label>
               <input
                 className="border border-black p-2 w-full"
                 type="text"
@@ -132,28 +149,7 @@ const SellPage = () => {
                 onChange={(e) => setCondition(e.target.value)}
               />
             </div>
-            <div className="flex flex-col items-center">
-              <label className="px-2" htmlFor="available">Available</label>
-              <input
-                className="border border-black p-2"
-                type="checkbox"
-                id="available"
-                name="available"
-                checked={available}
-                onChange={(e) => setAvailable(e.target.checked)}
-              />
-            </div>
-            <div className="flex flex-col items-center">
-              <label className="px-2" htmlFor="seller">Seller ID</label>
-              <input
-                className="border border-black p-2 w-full"
-                type="number"
-                id="seller"
-                name="seller"
-                value={seller}
-                onChange={(e) => setSeller(e.target.value)}
-              />
-            </div>
+
             {error && <div className="text-red-500">{error}</div>}
             {success && <div className="text-green-500">{success}</div>}
             <button
