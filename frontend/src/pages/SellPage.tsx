@@ -32,7 +32,7 @@ const SellPage = () => {
       image: imageUrl,
       production_date: productionDate,
       color,
-      condition,
+      condition
     };
 
     try {

@@ -1,9 +1,9 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from DatabaseConnection import Database
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:8000"}})
 
 # Initialize the database instance
 db_instance = Database.get_instance()
@@ -91,8 +91,18 @@ def receive_types():
 #@app.route('/api/login', methods=['POST'])
 #def
 
-#@app.route('/api/add_product', methods=['POST'])
-#def
+@app.route('/api/add_product', methods=['POST'])
+def create_product():
+    product_data = request.get_json()
+
+    print(product_data)
+
+    if not product_data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    # Process the incoming product data
+    return jsonify({"message": "Product added successfully!", "product": product_data})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
