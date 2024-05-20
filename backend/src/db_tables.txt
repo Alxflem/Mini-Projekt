@@ -11,7 +11,8 @@ CREATE TABLE user_account (
 CREATE TABLE product (
     p_id SERIAL PRIMARY KEY,
     name varchar(50) NOT NULL,
-    type varchar(15) NOT NULL,
+    type integer,
+	FOREIGN KEY (type) REFERENCES product_type(pt_id),
     price integer NOT NULL,
 	image varchar,
     production_date date,
@@ -51,3 +52,16 @@ INSERT INTO product_type (type_name) VALUES
 ('Jewelry and Accessories'),
 ('Consumer Services'),
 ('Collectibles and Antiques');
+
+SELECT * FROM product
+SELECT * FROM user_account
+SELECT * FROM product_type
+SELECT * FROM registred_interest
+
+CREATE TABLE inbox_message(
+	m_id SERIAL PRIMARY KEY,
+	u_id INT,
+    p_id INT,
+    FOREIGN KEY (u_id) REFERENCES user_account(u_id),
+    FOREIGN KEY (p_id) REFERENCES product(p_id)
+);
