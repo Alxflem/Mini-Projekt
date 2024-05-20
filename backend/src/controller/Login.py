@@ -1,14 +1,14 @@
 from DatabaseConnection import Database
 
-def login_user(username, password):
+def login_user(email, password):
 
     try:
         db_instance = Database.get_instance()
         connection = db_instance.get_connection()
         cursor = connection.cursor()
 
-        query = "SELECT EXISTS (SELECT 1 FROM user_account WHERE username = %s AND password = %s)"
-        cursor.execute(query, (username, password))
+        query = "SELECT EXISTS (SELECT 1 FROM user_account WHERE email = %s AND password = %s)"
+        cursor.execute(query, (email, password))
         exists = cursor.fetchone()[0]
 
         if exists:
@@ -22,5 +22,3 @@ def login_user(username, password):
             cursor.close()
         if connection:
             db_instance.return_connection(connection)
-        if db_instance:
-            db_instance.close_all_connections()

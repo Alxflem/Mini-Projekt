@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useUser } from "../components/UserContext";
 
 const LoginPage = () => {
@@ -9,28 +10,26 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { setUser } = useUser();
 
-  const handleLogin = (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    // Replace this with real authentication logic
-    const hardcodedEmail = "test@example.com";
-    const hardcodedPassword = "password123";
-
-    if (email === hardcodedEmail && password === hardcodedPassword) {
-      setUser({
-        firstName: "Tester",
-        lastName: "Testerson",
-        dateOfBirth: "06/02/2003",
-        email,
-        username: "testerino",
-        password,
-        purchaseHistory: [],
-      });
-      navigate("/landing");
-    } else {
-      setError("Invalid email or password");
-    }
+    const loginData = {
+      email,
+      password
   };
+
+  try {
+    const response = await axios.post("http://localhost:5000/api/login", loginData);
+    if (response.data.message === "Login successful!") {
+        navigate("/landing", { state: { email } });
+
+    } else {
+        setError("Invalid email or password");
+    }
+  } catch (error) {
+    setError("Failed to login.");
+  }
+};
 
   return (
     <div

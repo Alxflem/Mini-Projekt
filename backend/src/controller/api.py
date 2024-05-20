@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from DatabaseConnection import Database
+from Login import login_user
 from Registration import register_user
 from AddProduct import add_product
 
@@ -86,6 +87,28 @@ def receive_products():
 @app.route('/api/types', methods=['GET'])
 def receive_types():
     return get_types()
+
+
+#@app.route('/api/register', methods=['POST'])
+#def
+
+@app.route('/api/login', methods=['POST'])
+def verify_login():
+    login_data = request.get_json()
+
+    if not login_data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    email = login_data.get('email')
+    password = login_data.get('password')
+
+    if not email or not password:
+        return jsonify({"error": "Username and password required"}), 400
+
+    if login_user(email, password):
+        return jsonify({"message": "Login successful!"}), 200
+    else:
+        return jsonify({"error": "Invalid username or password"}), 401
 
 @app.route('/api/add_product', methods=['POST'])
 def register_product_endpoint():
