@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "../styling/LoginButton.css";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -8,8 +7,6 @@ const LoginButton = () => {
   const email = location.state?.email || "guest";
 
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const userName = localStorage.getItem("userName");
 
   return (
     <div className="login-container">

@@ -1,0 +1,124 @@
+.store-title {
+    font-size: var(--biggest-font-size);
+    color: var(--first-color);
+  }
+  
+  .page-title {
+    margin-top: 2%;
+    margin-right: 6%;
+    margin-bottom: 2%;
+  
+    font-size: 1.5rem;
+    font-weight: 900;
+    border-bottom: 2px solid var(--first-color);
+    border-radius: 3px;
+  }
+
+  .user-profile {
+    padding: 1rem;
+    border-radius: 4px; 
+    height: 100vh;
+  }
+
+  .user-profile .user-profile-content{
+    display: grid;
+    grid-template-rows: auto 1fr auto; 
+    width: 80%;
+    margin-left: 7%;
+  }
+  
+  .user-profile .user-info {
+    grid-row: 1;
+    margin-bottom: 1rem; 
+    padding: 0.75rem 1rem; 
+    border-radius: 4px; 
+    width: 100%;
+    float: left;
+  }
+  
+  .user-info .user-item{
+    border: solid 1px #ddd;
+    padding: 20px;
+    margin: 2%;
+    border-radius: 15px;
+    width: 100%;
+  }
+
+  .user-info .button{
+    float: right;
+  }
+
+  
+  .user-profile .order-history {
+    margin: 2%;
+    margin-left: 10%;
+    grid-row: 1;
+    width: 100%;  
+    border-collapse: collapse; 
+    border-radius: 4px; 
+  }
+
+  .table-overflow{
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+
+  .order-history table{
+    width: 100%;
+  }
+
+  .order-history .filtering{
+    width: 80%;
+    display: flex;
+    margin-bottom: 3%;
+  }
+
+  .order-history .filtering .date-selector{
+    padding: 15px;
+    width: 80%;
+  }
+
+  .order-history .filtering .date-selector{
+    padding: 15px;
+    width: 80%;
+  }
+
+  .order-history .filtering .datepicker{
+    border: solid 1px black;
+    border-radius: 10px;
+    margin-left: 10%;
+    padding: 10px;
+  }
+
+  .filtering .filter-button{
+    appearance: button;
+    background-color: #2a5a81;
+    border-radius: 15px;
+    height: 80%;
+    margin-top: 15px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 100%;
+    padding: 10px 21px;
+    }
+
+
+  .order-history h3{
+      
+    font-size: 1.2rem;
+    font-weight: 900;
+  }
+  
+.user-profile table th,
+.user-profile table td {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd; 
+  text-align: left; 
+}
+
+.user-profile table thead th {
+  background-color: #f5f5f5; 
+}
+
+  

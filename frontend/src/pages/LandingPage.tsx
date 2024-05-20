@@ -1,11 +1,10 @@
 import "../styling/LandingPage.css";
-import SearchBar from "../components/SearchBar";
 import ProductList from "../components/ProductList";
 import ViewProducts from "../components/ViewProducts";
 import LoginButton from "../components/LoginButton";
 
-
 const LandingPage = () => {
+ 
 
 
   return (
@@ -19,7 +18,6 @@ const LandingPage = () => {
             <p className="home__description">
               Your local store with nerd stuff!
             </p>
-            <SearchBar />
             <ProductList />
             <ViewProducts />
           </div>
