@@ -17,7 +17,7 @@ const SellPage = () => {
   useEffect(() => {
     // Fetch product types from API
     axios
-      .get("http://localhost:8000/api/types")
+      .get("http://localhost:5000/api/types")
       .then((response) => setType(response.data))
       .catch((error) => console.error("Error fetching types:", error));
   }, []);
@@ -37,7 +37,7 @@ const SellPage = () => {
 
     try {
       // Replace this with the actual URL of your Python API endpoint
-      await axios.post("http://localhost:8000/api/products", productData);
+      await axios.post("http://localhost:5000//api/add_product", productData);
       setSuccess("Product added successfully!");
       setError("");
     } catch (error) {

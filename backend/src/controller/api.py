@@ -3,7 +3,7 @@ from flask_cors import CORS
 from DatabaseConnection import Database
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:8000"}})
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
 
 # Initialize the database instance
 db_instance = Database.get_instance()
