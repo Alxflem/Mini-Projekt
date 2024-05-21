@@ -9,6 +9,7 @@ import RegisterPage from "./pages/RegisterPage";
 import SellPage from "./pages/SellPage";
 import ProfilePage from "./pages/HomePage";
 import { UserProvider } from "./components/UserContext";
+import ProductPage from "./pages/ProductPage";
 
 const App = () => {
 
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/test" element={<TestPage />} />
             <Route path="/sell" element={<SellPage />} />
+            <Route path="/product/:productId" element={<ProductPage />} />
           </Routes>
         </Router>
       </UserProvider>
