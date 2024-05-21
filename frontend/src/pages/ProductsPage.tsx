@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ProductCard from '../components/ProductCard';  // Adjust the import path as necessary
+import ProductCard from '../components/ProductCard';
 import '../styling/ProductsPage.css';
 import Header from '../components/Header';
 import { CartItem } from '../components/Header';
@@ -14,7 +14,7 @@ interface Product {
   name: string;
   price: number;
   image: string;
-  category: string;
+  type: number; // Assuming type is represented as an ID
 }
 
 const ProductsPage: React.FC = () => {
@@ -27,12 +27,14 @@ const ProductsPage: React.FC = () => {
   const [filterOptions, setFilterOptions] = useState<string[]>([]);
   const [chosenInterests, setChosenInterests] = useState<string[]>([]); // State to store chosen interests
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedType, setSelectedType] = useState<number | null>(null); // Changed to number or null
 
 
   useEffect(() => {
     fetchProducts();
     fetchFilterOptions();
   }, []);
+
 
   const addToCart = (name: string, price: number, imageUrl: string) => {
     const newItem: CartItem = {
@@ -81,11 +83,13 @@ const ProductsPage: React.FC = () => {
   };
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const filter = e.target.value;
-    setSelectedCategory(filter);
-    if (filter) {
-      const filtered = products.filter((product) => product.category === filter);
+    const typeId = e.target.value ? parseInt(e.target.value, 10) : null;
+    setSelectedType(typeId);
+    console.log('Selected Type:', typeId); // Debugging log
+    if (typeId !== null) {
+      const filtered = products.filter((product) => product.type === typeId);
       setFilteredProducts(filtered);
+      console.log('Filtered Products:', filtered); // Debugging log
     } else {
       setFilteredProducts(products);
     }
@@ -126,13 +130,15 @@ const ProductsPage: React.FC = () => {
     setSearchQuery(query);
     const filtered = products.filter((product) => product.name.toLowerCase().includes(query.toLowerCase()));
     setFilteredProducts(filtered);
+    console.log('Search Query:', query); // Debugging log
+    console.log('Filtered Products After Search:', filtered); // Debugging log
   };
 
   useEffect(() => {
     let updatedProducts = products;
 
-    if (selectedCategory) {
-      updatedProducts = updatedProducts.filter(product => product.category === selectedCategory);
+    if (selectedType !== null) {
+      updatedProducts = updatedProducts.filter(product => product.type === selectedType);
     }
 
     if (searchQuery) {
@@ -140,7 +146,8 @@ const ProductsPage: React.FC = () => {
     }
 
     setFilteredProducts(updatedProducts);
-  }, [searchQuery, selectedCategory, products]);
+    console.log('Updated Products:', updatedProducts); // Debugging log
+  }, [searchQuery, selectedType, products]);
 
   return (
     <div className="products-list-page">
@@ -158,13 +165,12 @@ const ProductsPage: React.FC = () => {
         </div>
 
         <div className="sort-options">
-          <label htmlFor="filter">Filter by: </label>
+          <label htmlFor="filter">Filter by Type: </label>
           <select id="filter" onChange={handleFilterChange}>
-            <option value="">All Categories</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Kitchen">Kitchen</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Office">Office</option>
+            <option value="">All Types</option>
+            <option value="1">Electronics</option>
+            <option value="2">Office</option>
+            <option value="3">Clothing</option>
           </select>
         </div>
 
