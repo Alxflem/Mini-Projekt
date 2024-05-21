@@ -4,6 +4,7 @@ from DatabaseConnection import Database
 from Login import login_user
 from Registration import register_user
 from AddProduct import add_product
+from Inbox import message_buy
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
@@ -110,6 +111,33 @@ def verify_login():
         return jsonify({"message": "Login successful!", "user": user_data}), 200
     else:
         return jsonify({"error": "Invalid username or password"}), 401
+    
+
+
+
+@app.route('/api/messageBuy', methods=['POST'])
+def message():
+    message_data = request.get_json()
+
+    if not message_data:
+        print("Invalid input")
+        return jsonify({"error": "Invalid input"}), 400
+    
+    user_id = message_data.get('user_id')
+    product_id = message_data.get('product_id')
+    product_type_id = message_data.get('product_type_id')
+    message_content = message_data.get('message')
+
+    if not user_id or not message_content:
+        return jsonify({"error": "user_id and message are required"}), 400 
+    
+    new_message = message_buy(user_id=user_id, product_id=product_id, product_type_id=product_type_id, message=message_content)
+    
+    if "error" in new_message:
+        return jsonify(new_message), 500
+    
+    return jsonify({"message": "Message inserted successfully"}), 201
+
 
 
 
