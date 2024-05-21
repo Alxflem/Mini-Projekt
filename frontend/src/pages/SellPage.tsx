@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ReactDOM } from "react";
 import axios from "axios";
 import { useUser } from '../components/UserContext';
 
@@ -24,19 +25,27 @@ const SellPage = () => {
       .catch((error) => console.error("Error fetching types:", error));
   }, []);
 
+  useEffect(() => {
+    console.log("User data in SellPage:", user); // Debugging line
+    if (user) {
+      setSeller(user?.email);
+    }
+  }, [user]);
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const productData = {
       name: productName,
-      type: type,
-      price: price,
+      type: parseInt(type),
+      price: parseFloat(price),
       image: imageUrl,
       production_date: productionDate,
       color: color,
       condition: condition,
-      seller: user?.email
+      seller: seller
     };
+
 
     try {
       // Replace this with the actual URL of your Python API endpoint

@@ -29,10 +29,15 @@ class Database:
         return Database.__instance
 
     def get_connection(self):
-        return self.connection_pool.getconn()
+        connection = self.connection_pool.getconn()
+        print("Connection obtained from pool")
+        return connection
 
     def return_connection(self, connection):
-        self.connection_pool.putconn(connection)
+        if connection:
+            self.connection_pool.putconn(connection)
+            print("Connection returned to pool")
 
     def close_all_connections(self):
         self.connection_pool.closeall()
+        print("All connections closed")
