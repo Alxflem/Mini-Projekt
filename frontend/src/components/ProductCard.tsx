@@ -12,10 +12,8 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, imageUrl, onAddToCart }) => {
   const navigate = useNavigate();
 
-  console.log('ProductCard ID:', id);  // Log the ID to verify it's passed correctly
-
   const handleAddToCart = (event: React.MouseEvent) => {
-    event.stopPropagation();
+    event.stopPropagation();  // Prevent navigating to the product page when clicking the "Add to Cart" button
     onAddToCart(name, price, imageUrl);
   };
 
