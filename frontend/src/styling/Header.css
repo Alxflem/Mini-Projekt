@@ -1,0 +1,75 @@
+
+.header {
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ccc;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1; /* This allows the content to grow and take all available space */
+}
+
+.cart-button {
+    margin-right: 10%;
+    margin-top: 2%;
+    padding: 20px;
+    background-color: #2a5a81;
+    border-radius: 45px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.cart-window {
+    position: absolute;
+    top: 130px;
+    right: 250px;
+    width: 300px;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+  }
+  
+  .cart-window h2 {
+    margin-top: 0;
+  }
+  
+  .cart-window ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .cart-window li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+  }
+  
+  .cart-window .checkout-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    color: white;
+    background-color: #2a5a81;
+    border: 1px solid #d5d9d9;
+    border-radius: 8px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Amazon Ember",sans-serif;
+    font-size: 13px;
+    line-height: 29px;
+    padding: 0 10px 0 11px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    width: 100px;
+  }

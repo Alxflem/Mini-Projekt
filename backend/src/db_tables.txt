@@ -1,0 +1,55 @@
+CREATE TABLE user_account (
+    u_id SERIAL PRIMARY KEY,
+    username VARCHAR(30) NOT NULL,
+    password VARCHAR(30) NOT NULL,
+	birth_date DATE,
+	first_name VARCHAR(15) NOT NULL,
+	last_name VARCHAR(15) NOT NULL,
+	email VARCHAR(30) NOT NULL,
+
+);
+
+CREATE TABLE product (
+    p_id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    type INTEGER,
+	FOREIGN KEY (type) REFERENCES product_type(pt_id),
+    price INTEGER NOT NULL,
+	image VARCHAR,
+    production_date DATE,
+    color VARCHAR(12) NOT NULL,
+    condition VARCHAR(10) NOT NULL,
+	available BOOLEAN,
+    seller INTEGER,
+    FOREIGN KEY (seller) REFERENCES user_account(u_id)
+);
+
+CREATE TABLE product_type (
+	pt_id SERIAL PRIMARY KEY,
+	type_name VARCHAR(20)
+);
+	
+CREATE TABLE registred_interest (
+	interest_id SERIAL PRIMARY KEY,
+	pt_id INTEGER,
+	FOREIGN KEY (pt_id) REFERENCES product_type(pt_id),
+	u_id INTEGER,
+	FOREIGN KEY (u_id) REFERENCES user_account(u_id)
+);
+
+INSERT INTO product_type (type_name) VALUES
+('Electronics'),
+('Home Appliances'),
+('Clothing and Apparel'),
+('Beauty and Personal Care'),
+('Health and Wellness'),
+('Furniture'),
+('Books and Stationery'),
+('Toys and Games'),
+('Automotive'),
+('Sports and Outdoors'),
+('Home and Garden'),
+('Pet Supplies'),
+('Jewelry and Accessories'),
+('Consumer Services'),
+('Collectibles and Antiques');
