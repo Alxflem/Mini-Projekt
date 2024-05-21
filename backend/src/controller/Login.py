@@ -1,6 +1,9 @@
 from DatabaseConnection import Database
 
 def login_user(email, password):
+    connection = None
+    cursor = None
+
     try:
         db_instance = Database.get_instance()
         connection = db_instance.get_connection()
@@ -12,6 +15,12 @@ def login_user(email, password):
 
         if user:
             print("User data retrieved from database:", user)
+            print("Username:", user[1])
+            print("Password:", user[2])
+            print("Date of birth:", user[3])
+            print("First name:", user[4])
+            print("Last name:", user[5])
+            print("Email:", user[6])
             user_data = {
                 'username': user[1],
                 'password': user[2],
@@ -20,6 +29,7 @@ def login_user(email, password):
                 'lastname': user[5],
                 'email': user[6],
             }
+            print("User data: ", user_data)
             return user_data
         else:
             print("No matching user found.")

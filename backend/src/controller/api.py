@@ -1,3 +1,6 @@
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from DatabaseConnection import Database
@@ -110,6 +113,7 @@ def verify_login():
         return jsonify({"message": "Login successful!", "user": user_data}), 200
     else:
         return jsonify({"error": "Invalid username or password"}), 401
+
 
 
 
