@@ -4,13 +4,12 @@ import '../styling/ProductsPage.css';
 import Header from '../components/Header';
 import { CartItem } from '../components/Header';
 import SearchBar from '../components/SearchBar';
-import axios from 'axios';
 
 interface Product {
-  p_id: number;
+  id: number;
   name: string;
   price: number;
-  image: string;
+  imageUrl: string;
   category: string;
 }
 
@@ -27,10 +26,15 @@ const ProductsPage: React.FC = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get<Product[]>('http://localhost:5000/api/products');
-      console.log('API response:', response.data);
-      setProducts(response.data);
-      setFilteredProducts(response.data);
+      const response = await fetch('http://localhost:5000/api/products');
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Fetched products:', data);  // Log the fetched data
+        setProducts(data);
+        setFilteredProducts(data);
+      } else {
+        console.error('Failed to fetch products');
+      }
     } catch (error) {
       console.error('Error fetching products:', error);
     }
@@ -119,11 +123,11 @@ const ProductsPage: React.FC = () => {
         <div className="products-grid">
           {filteredProducts.map(product => (
             <ProductCard
-              key={product.p_id}
-              id={product.p_id}
+              key={product.id}
+              id={product.id}
               name={product.name}
               price={product.price}
-              imageUrl={product.image}
+              imageUrl={product.imageUrl}
               onAddToCart={addToCart}
             />
           ))}
