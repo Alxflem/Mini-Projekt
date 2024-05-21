@@ -4,6 +4,7 @@ from DatabaseConnection import Database
 from Login import login_user
 from Registration import register_user
 from AddProduct import add_product
+from GetMessage import get_messages
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
@@ -88,9 +89,10 @@ def receive_products():
 def receive_types():
     return get_types()
 
+@app.route('api/messages/<string:email>', methods=['GET'])
+def receive_messages(email):
+    return get_messages(email)
 
-#@app.route('/api/register', methods=['POST'])
-#def
 
 @app.route('/api/login', methods=['POST'])
 def verify_login():
@@ -110,7 +112,6 @@ def verify_login():
         return jsonify({"message": "Login successful!", "user": user_data}), 200
     else:
         return jsonify({"error": "Invalid username or password"}), 401
-
 
 
 @app.route('/api/add_product', methods=['POST'])
@@ -138,6 +139,7 @@ def register_product_endpoint():
 
     return jsonify(result), status
 
+
 @app.route('/api/reg_user', methods=['POST'])
 def register_user_endpoint():
     user_data = request.get_json()
@@ -159,6 +161,22 @@ def register_user_endpoint():
     )
 
     return jsonify(result), status
+
+
+#@app.route('/api/get_messages', methods=['POST'])
+#def register_user_endpoint():
+#    user_data = request.get_json()
+#
+#    if not user_data:
+#        return jsonify({"error": "Invalid input"}), 400
+#
+#    required_fields = ["email"]
+#    if not all(field in user_data for field in required_fields):
+#        return jsonify({"error": "Missing fields"}), 400
+#
+#    response_data = get_messages(user_data)
+#
+#    return jsonify(response_data)
 
 
 if __name__ == '__main__':
