@@ -20,6 +20,7 @@ const UserProfile: React.FC = () => {
   const passwordDisplay = isPasswordVisible
     ? user?.password
     : "*".repeat(user?.password.length || 0);
+
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [filteredPurchases, setFilteredPurchases] = useState(
@@ -56,10 +57,7 @@ const UserProfile: React.FC = () => {
       <div className="user-profile-content">
         <div className="user-info">
           <div className="user-item">
-            <p>Full Name: {user?.firstName}</p>
-          </div>
-          <div className="user-item">
-            <p>Last Name: {user?.lastName}</p>
+            <p>Full Name: {user?.firstName} {user?.lastName}</p>
           </div>
           <div className="user-item">
             <p>Email: {user?.email}</p>
