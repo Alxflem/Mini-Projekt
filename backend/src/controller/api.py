@@ -93,7 +93,7 @@ def receive_products():
 def receive_types():
     return get_types()
 
-@app.route('api/messages/<string:email>', methods=['GET'])
+@app.route('/api/messages/<string:email>', methods=['GET'])
 def receive_messages(email):
     return get_messages(email)
 
