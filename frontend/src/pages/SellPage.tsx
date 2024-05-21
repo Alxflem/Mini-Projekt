@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ReactDOM } from "react";
+import { useNavigate } from "react-router-dom";  // Import useNavigate
 import axios from "axios";
 import { useUser } from '../components/UserContext';
 import Header from "../components/Header";
@@ -17,8 +17,7 @@ const SellPage = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const { user } = useUser();
-
-
+  const navigate = useNavigate();  // Initialize useNavigate
 
   useEffect(() => {
     // Fetch product types from API
@@ -54,12 +53,12 @@ const SellPage = () => {
       seller: seller
     };
 
-
     try {
       // Replace this with the actual URL of your Python API endpoint
       await axios.post("http://127.0.0.1:5000/api/add_product", productData);
       setSuccess("Product added successfully!");
       setError("");
+      navigate("/landing");  // Navigate to /landing after successful submission
     } catch (error) {
       setError("Failed to add product.");
       setSuccess("");
@@ -71,7 +70,7 @@ const SellPage = () => {
       id="maindiv"
       className="h-screen w-screen flex items-center justify-center"
     >
-      <div id="centerdiv " className="text-center p-10 w-full max-w-3xl">
+      <div id="centerdiv" className="text-center p-10 w-full max-w-3xl">
         <h1 className="py-10 text-4xl">Sell a Product</h1>
         <div className="bg-slate-300 border border-2 border-gray-500 p-10 rounded-xl shadow-sm w-full max-w-3xl">
           <form onSubmit={handleSubmit} className="space-y-4">
