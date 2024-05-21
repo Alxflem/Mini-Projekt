@@ -31,7 +31,7 @@ const RegisterPage = () => {
 
     try {
       
-      await axios.post("http://localhost:5000/api/reg_user", userData);
+      await axios.post("http://127.0.0.1:5000/api/reg_user", userData);
       setSuccess("User added successfully!");
       setError("");
     } catch (error) {

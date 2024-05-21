@@ -31,5 +31,7 @@ def get_messages(email):
         print(f"Failed to get messages: {e}")
         return {"error": "Failed to get messages"}, 500
     finally:
-        if 'db_instance' in locals() and db_instance:
-            db_instance.close_all_connections()
+        if cursor:
+            cursor.close()
+        if connection:
+            db_instance.return_connection(connection)

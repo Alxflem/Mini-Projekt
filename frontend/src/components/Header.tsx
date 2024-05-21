@@ -76,7 +76,7 @@ const Header: React.FC<HeaderProps> = ({ cartItems, removeFromCart }) => {
 
   const getNotifications = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/messages/' + user?.email);
+      const response = await axios.get('http://127.0.0.1:5000/api/messages/' + user?.email);
       console.log('Response:', response.data);
       setNotifications(response.data);
     } catch (error) {

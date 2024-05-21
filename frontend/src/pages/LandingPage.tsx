@@ -22,14 +22,14 @@ const LandingPage = () => {
               Your local store with nerd stuff!
             </p>
             <ViewProducts />
-            <div className="">
+            <div className="flex w-15 p-5">
               <button
-                className="login-button"
+                className="login-button justify-center"
                 onClick={() => {
                   navigate("/sell");
                 }}
               >
-                <p>{user?.email || "guest"}</p>
+                <p>{"Sell your stuff here!"}</p>
               </button>
             </div>
           </div>
