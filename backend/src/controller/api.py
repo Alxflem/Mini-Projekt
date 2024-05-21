@@ -1,3 +1,6 @@
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from DatabaseConnection import Database
@@ -137,6 +140,7 @@ def message():
         return jsonify(new_message), 500
     
     return jsonify({"message": "Message inserted successfully"}), 201
+
 
 
 
