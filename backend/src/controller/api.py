@@ -237,22 +237,29 @@ def get_product(product_id):
 
 
 @app.route('/api/register_interest', methods=['POST'])
-def register_user_endpoint():
-    user_data = request.get_json()
+def register_user_interest():
+    try:
+        user_data = request.get_json()
+        print("Received user data:", user_data)
+        
+        if not user_data:
+            return jsonify({"error": "Invalid input"}), 400
 
-    if not user_data:
-        return jsonify({"error": "Invalid input"}), 400
+        required_fields = ["type_name", "email"]
+        if not all(field in user_data for field in required_fields):
+            return jsonify({"error": "Missing fields"}), 400
 
-    required_fields = ["type_name", "email"]
-    if not all(field in user_data for field in required_fields):
-        return jsonify({"error": "Missing fields"}), 400
+        result, status = register_interest(
+            user_data["type_name"],
+            user_data["email"]
+        )
 
-    result, status = register_interest(
-        user_data["type_name"],
-        user_data["email"]
-    )
+        return jsonify(result), status
 
-    return jsonify(result), status
+    except Exception as e:
+        print("Error occurred:", str(e))
+        return jsonify({"error": "Internal server error"}), 500
+
 
 #@app.route('/api/get_messages', methods=['POST'])
 #def register_user_endpoint():

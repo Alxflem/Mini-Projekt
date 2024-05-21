@@ -1,4 +1,4 @@
-import psycopg2
+import psycopg2 # type: ignore
 
 connection = psycopg2.connect(
     host="pgserver.mau.se",

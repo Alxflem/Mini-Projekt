@@ -88,11 +88,12 @@ const ProductsPage: React.FC = () => {
     try {
       if (!chosenInterests.includes(filter) && filter !== "") {
         setChosenInterests([...chosenInterests, filter]);
+        console.log("ChosenInterest: " + filter)
       }
       
       const payload = {
-        chosenOption: filter,
-        userEmail: user?.email 
+        type_name: filter,
+        email: user?.email 
       };
 
       const response = await axios.post('http://localhost:5000/api/register_interest', payload);
