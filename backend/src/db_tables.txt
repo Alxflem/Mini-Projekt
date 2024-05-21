@@ -15,7 +15,7 @@ CREATE TABLE product (
     type INTEGER,
 	FOREIGN KEY (type) REFERENCES product_type(pt_id),
     price INTEGER NOT NULL,
-	image VARCHAR,
+	image VARCHAR (255),
     production_date DATE,
     color VARCHAR(12) NOT NULL,
     condition VARCHAR(10) NOT NULL,
