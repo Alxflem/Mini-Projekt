@@ -9,6 +9,7 @@ from Registration import register_user
 from AddProduct import add_product
 from GetMessage import get_messages
 from Inbox import message_buy
+from RegisterInterest import register_interest
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
@@ -234,6 +235,24 @@ def get_product(product_id):
         if connection:
             db_instance.return_connection(connection)
 
+
+@app.route('/api/register_interest', methods=['POST'])
+def register_user_endpoint():
+    user_data = request.get_json()
+
+    if not user_data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    required_fields = ["type_name", "email"]
+    if not all(field in user_data for field in required_fields):
+        return jsonify({"error": "Missing fields"}), 400
+
+    result, status = register_interest(
+        user_data["type_name"],
+        user_data["email"]
+    )
+
+    return jsonify(result), status
 
 #@app.route('/api/get_messages', methods=['POST'])
 #def register_user_endpoint():
