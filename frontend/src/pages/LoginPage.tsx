@@ -22,7 +22,7 @@ const LoginPage = () => {
       await new Promise((resolve) => setTimeout(resolve, 1000)); // 2000 milliseconds = 2 seconds
 
       const response = await axios.post(
-        "http://localhost:5000/api/login",
+        "http://127.0.0.1:5000/api/login",
         loginData
       );
       if (response.data.message === "Login successful!") {

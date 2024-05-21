@@ -29,5 +29,4 @@ def register_user(username, password, birth_date, first_name, last_name, email):
         if connection:
             connection.autocommit = True
             db_instance.return_connection(connection)
-        if db_instance:
-            db_instance.close_all_connections()
+        

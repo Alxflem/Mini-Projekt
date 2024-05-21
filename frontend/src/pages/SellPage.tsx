@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ReactDOM } from "react";
 import axios from "axios";
 import { useUser } from '../components/UserContext';
+import Header from "../components/Header";
 
 const SellPage = () => {
   const [productName, setProductName] = useState("");
@@ -17,10 +18,12 @@ const SellPage = () => {
   const [success, setSuccess] = useState("");
   const { user } = useUser();
 
+
+
   useEffect(() => {
     // Fetch product types from API
     axios
-      .get("http://localhost:5000/api/types")
+      .get("http://127.0.0.1:5000/api/types")
       .then((response) => setType(response.data))
       .catch((error) => console.error("Error fetching types:", error));
   }, []);
@@ -31,6 +34,11 @@ const SellPage = () => {
       setSeller(user?.email);
     }
   }, [user]);
+
+  const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedType = parseInt(event.target.value);
+    setType(selectedType.toString());
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -49,7 +57,7 @@ const SellPage = () => {
 
     try {
       // Replace this with the actual URL of your Python API endpoint
-      await axios.post("http://localhost:5000/api/add_product", productData);
+      await axios.post("http://127.0.0.1:5000/api/add_product", productData);
       setSuccess("Product added successfully!");
       setError("");
     } catch (error) {
@@ -84,14 +92,18 @@ const SellPage = () => {
               <label className="px-2" htmlFor="type">
                 Type
               </label>
-              <input
+              <select
                 className="border border-black p-2 w-full"
-                type="text"
                 id="type"
                 name="type"
                 value={type}
-                onChange={(e) => setType(e.target.value)}
-              />
+                onChange={handleTypeChange}
+              >
+                <option value="0">Select Type</option>
+                <option value="1">Electronics</option>
+                <option value="2">Office</option>
+                <option value="3">Clothing</option>
+              </select>
             </div>
             <div className="flex flex-col items-center">
               <label className="px-2" htmlFor="price">

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import ProductCard from '../components/ProductCard';
+import axios from 'axios';
+import ProductCard from '../components/ProductCard';  // Adjust the import path as necessary
 import '../styling/ProductsPage.css';
 import Header from '../components/Header';
 import { CartItem } from '../components/Header';
 import SearchBar from '../components/SearchBar';
-import axios from 'axios';
+
 import { useUser } from "../components/UserContext";
 
+// Define interface for product
 interface Product {
   p_id: number;
   name: string;
@@ -24,6 +26,8 @@ const ProductsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filterOptions, setFilterOptions] = useState<string[]>([]);
   const [chosenInterests, setChosenInterests] = useState<string[]>([]); // State to store chosen interests
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+
 
   useEffect(() => {
     fetchProducts();
@@ -42,6 +46,7 @@ const ProductsPage: React.FC = () => {
     console.log(newItem);
     setCartItems(prevCartItems => [...prevCartItems, newItem]);
   }
+
 
   const removeFromCart = (id: number) => {
     setCartItems(cartItems.filter(item => item.id !== id));
@@ -71,17 +76,19 @@ const ProductsPage: React.FC = () => {
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sortValue = e.target.value;
     setSortType(sortValue);
-    const sortedFilteredProducts = sortProducts(sortValue, [...filteredProducts]);
+    const sortedFilteredProducts = sortProducts(sortValue, filteredProducts);
     setFilteredProducts(sortedFilteredProducts);
   };
 
-  const handleFilterChange = (filter: string) => {
-    const filtered = products.filter((product) => product.category === filter);
-    if (!filter) {
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const filter = e.target.value;
+    setSelectedCategory(filter);
+    if (filter) {
+      const filtered = products.filter((product) => product.category === filter);
+      setFilteredProducts(filtered);
+    } else {
       setFilteredProducts(products);
-      return;
     }
-    setFilteredProducts(filtered);
   };
 
   const sendChosenInterest = async (filter: string) => {
@@ -121,6 +128,20 @@ const ProductsPage: React.FC = () => {
     setFilteredProducts(filtered);
   };
 
+  useEffect(() => {
+    let updatedProducts = products;
+
+    if (selectedCategory) {
+      updatedProducts = updatedProducts.filter(product => product.category === selectedCategory);
+    }
+
+    if (searchQuery) {
+      updatedProducts = updatedProducts.filter(product => product.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
+
+    setFilteredProducts(updatedProducts);
+  }, [searchQuery, selectedCategory, products]);
+
   return (
     <div className="products-list-page">
       <Header cartItems={cartItems} removeFromCart={removeFromCart} />
@@ -138,7 +159,7 @@ const ProductsPage: React.FC = () => {
 
         <div className="sort-options">
           <label htmlFor="filter">Filter by: </label>
-          <select onChange={(e) => handleFilterChange(e.target.value)}>
+          <select id="filter" onChange={handleFilterChange}>
             <option value="">All Categories</option>
             <option value="Clothing">Clothing</option>
             <option value="Kitchen">Kitchen</option>
