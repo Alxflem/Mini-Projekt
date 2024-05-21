@@ -161,6 +161,45 @@ def register_user_endpoint():
 
     return jsonify(result), status
 
+@app.route('/api/products/<int:product_id>', methods=['GET'])
+def get_product(product_id):
+    connection = None
+    cursor = None
+
+    try:
+        connection = db_instance.get_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM product WHERE p_id = %s", (product_id,))
+        product = cursor.fetchone()
+
+        if product is None:
+            return jsonify({"error": "Product not found"}), 404
+
+        product_data = {
+            'p_id': product[0],
+            'name': product[1],
+            'type': product[2],
+            'price': product[3],
+            'image': product[4],
+            'production_date': product[5],
+            'color': product[6],
+            'condition': product[7],
+            'available': product[8],
+            'seller': product[9]
+        }
+
+        return jsonify(product_data), 200
+
+    except Exception as e:
+        print(f"Failed to retrieve product: {e}")
+        return jsonify({"error": "Failed to retrieve product"}), 500
+
+    finally:
+        if cursor:
+            cursor.close()
+        if connection:
+            db_instance.return_connection(connection)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

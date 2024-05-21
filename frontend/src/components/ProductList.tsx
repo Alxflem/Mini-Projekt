@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import '../styling/ProductsList.css';
 
 // Define interface for product
@@ -15,12 +16,13 @@ const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get<{ data: Product[] }>('http://localhost:5000/api/products')
+    axios.get<Product[]>('http://localhost:5000/api/products')
       .then(response => {
         console.log('API response:', response.data);
-        setProducts(response.data.data);
+        setProducts(response.data);
         setLoading(false);
       })
       .catch(error => {
@@ -28,11 +30,11 @@ const ProductList = () => {
         setError('Error fetching products');
         setLoading(false);
       });
-  }, []); //empty dependency array ensures this effect runs only once, similar to componentDidMount
+  }, []); // empty dependency array ensures this effect runs only once, similar to componentDidMount
 
   useEffect(() => {
     console.log('Products state:', products); 
-  }, [products]); //log products state whenever it changes
+  }, [products]); // log products state whenever it changes
 
   if (loading) {
     return <div>Loading...</div>;
@@ -51,13 +53,15 @@ const ProductList = () => {
     <div className="product-list">
       <section className="product-row">
         {products.map(product => (
-          <a href="" key={product.p_id}>
-            <div className="product-card">
-              <img src={product.image} alt={product.name} />
-              <h3 className="product-title">{product.name}</h3>
-              <p className="product-price">${product.price}</p>
-            </div>
-          </a>
+          <button 
+            key={product.p_id} 
+            className="product-card"
+            onClick={() => navigate(`/product/${product.p_id}`)}
+          >
+            <img src={product.image} alt={product.name} />
+            <h3 className="product-title">{product.name}</h3>
+            <p className="product-price">${product.price}</p>
+          </button>
         ))}
       </section>
     </div>

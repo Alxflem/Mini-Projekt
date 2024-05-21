@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ProductCard from '../components/ProductCard';
 import '../styling/ProductsPage.css';
 import Header from '../components/Header';
-import { CartItem } from '../components/Header'; // Import CartItem type from Header
+import { CartItem } from '../components/Header';
 import SearchBar from '../components/SearchBar';
 
 interface Product {
@@ -15,20 +15,21 @@ interface Product {
 
 const ProductsPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);  
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [sortType, setSortType] = useState<string>('alphabetical');
-  const [cartItems, setCartItems] = useState<CartItem[]>([]); 
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   useEffect(() => {
     fetchProducts();
   }, []);
-  
+
   const fetchProducts = async () => {
     try {
       const response = await fetch('http://localhost:5000/api/products');
       if (response.ok) {
         const data = await response.json();
+        console.log('Fetched products:', data);  // Log the fetched data
         setProducts(data);
         setFilteredProducts(data);
       } else {
@@ -44,12 +45,12 @@ const ProductsPage: React.FC = () => {
       id: cartItems.length + 1,
       name,
       quantity: 1,
-      imageUrl, // Add imageUrl to the new item
+      imageUrl,
       price,
     };
 
-    console.log(newItem); //works
-    setCartItems(prevCartItems => [...prevCartItems, newItem]); // Update state with new array
+    console.log(newItem);
+    setCartItems(prevCartItems => [...prevCartItems, newItem]);
     cartItems.forEach(newItem => {
       console.log("Added: " + newItem.name);
     });
@@ -62,13 +63,12 @@ const ProductsPage: React.FC = () => {
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sortValue = e.target.value;
     setSortType(sortValue);
-    const sortedFilteredProducts = sortProducts(sortValue, [...filteredProducts]); 
+    const sortedFilteredProducts = sortProducts(sortValue, [...filteredProducts]);
     setFilteredProducts(sortedFilteredProducts);
   };
 
   const handleFilterChange = (filter: string) => {
     const filtered = products.filter((product) => product.category === filter);
-    //if no filter is selected, show all products
     if (!filter) {
       setFilteredProducts(products);
       return;
@@ -90,38 +90,37 @@ const ProductsPage: React.FC = () => {
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    const filtered = filteredProducts.filter((product) => product.name.toLowerCase().includes(query.toLowerCase()));
+    const filtered = products.filter((product) => product.name.toLowerCase().includes(query.toLowerCase()));
     setFilteredProducts(filtered);
   };
-
 
   return (
     <div className="products-list-page">
       <Header cartItems={cartItems} removeFromCart={removeFromCart} />
-      <h1 className='page-title'>Products List</h1>
-      <div className='search-bar'><SearchBar onSearch={handleSearch}/></div>
-      <div className='products-container'>
-      <div className="sort-options">
-        <label htmlFor="sort">Sort by: </label>
-        <select id="sort" value={sortType} onChange={handleSortChange}>
-          <option value="alphabetical">Alphabetical</option>
-          <option value="price-low-high">Price: Low to High</option>
-          <option value="price-high-low">Price: High to Low</option>
-        </select>
-      </div>
+      <h1 className="page-title">Products List</h1>
+      <div className="search-bar"><SearchBar onSearch={handleSearch} /></div>
+      <div className="products-container">
+        <div className="sort-options">
+          <label htmlFor="sort">Sort by: </label>
+          <select id="sort" value={sortType} onChange={handleSortChange}>
+            <option value="alphabetical">Alphabetical</option>
+            <option value="price-low-high">Price: Low to High</option>
+            <option value="price-high-low">Price: High to Low</option>
+          </select>
+        </div>
 
-      <div className='sort-options'>
-      <label htmlFor='filter'>Filter by: </label>
-        <select onChange={(e) => handleFilterChange(e.target.value)}>
-          <option value="">All Categories</option>
-          <option value="Clothing">Clothing</option>
-          <option value="Kitchen">Kitchen</option>
-          <option value="Electronics">Electronics</option>
-          <option value="Office">Office</option>
-        </select>
-    </div>
+        <div className="sort-options">
+          <label htmlFor="filter">Filter by: </label>
+          <select onChange={(e) => handleFilterChange(e.target.value)}>
+            <option value="">All Categories</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Kitchen">Kitchen</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Office">Office</option>
+          </select>
+        </div>
 
-    <div className="products-grid">
+        <div className="products-grid">
           {filteredProducts.map(product => (
             <ProductCard
               key={product.id}
@@ -130,7 +129,7 @@ const ProductsPage: React.FC = () => {
               price={product.price}
               imageUrl={product.imageUrl}
               onAddToCart={addToCart}
-              />
+            />
           ))}
         </div>
       </div>
