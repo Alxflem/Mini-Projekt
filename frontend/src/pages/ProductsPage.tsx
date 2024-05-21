@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import { CartItem } from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import axios from 'axios';
+import { useUser } from "../components/UserContext";
 
 interface Product {
   p_id: number;
@@ -15,26 +16,19 @@ interface Product {
 }
 
 const ProductsPage: React.FC = () => {
+  const { user } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [sortType, setSortType] = useState<string>('alphabetical');
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [filterOptions, setFilterOptions] = useState<string[]>([]);
+  const [chosenInterests, setChosenInterests] = useState<string[]>([]); // State to store chosen interests
 
   useEffect(() => {
     fetchProducts();
+    fetchFilterOptions();
   }, []);
-
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get<Product[]>('http://localhost:5000/api/products');
-      console.log('API response:', response.data);
-      setProducts(response.data);
-      setFilteredProducts(response.data);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-    }
-  };
 
   const addToCart = (name: string, price: number, imageUrl: string) => {
     const newItem: CartItem = {
@@ -47,13 +41,31 @@ const ProductsPage: React.FC = () => {
 
     console.log(newItem);
     setCartItems(prevCartItems => [...prevCartItems, newItem]);
-    cartItems.forEach(newItem => {
-      console.log("Added: " + newItem.name);
-    });
   }
 
   const removeFromCart = (id: number) => {
     setCartItems(cartItems.filter(item => item.id !== id));
+  };
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get<Product[]>('http://localhost:5000/api/products');
+      console.log('API response:', response.data);
+      setProducts(response.data);
+      setFilteredProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
+
+  const fetchFilterOptions = async () => {
+    try {
+      const response = await axios.get<string[]>('http://localhost:5000/api/types');
+      console.log('Filter options:', response.data);
+      setFilterOptions(response.data);
+    } catch (error) {
+      console.error('Error fetching filter options:', error);
+    }
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -70,6 +82,24 @@ const ProductsPage: React.FC = () => {
       return;
     }
     setFilteredProducts(filtered);
+  };
+
+  const sendChosenInterest = async (filter: string) => {
+    try {
+      if (!chosenInterests.includes(filter) && filter !== "") {
+        setChosenInterests([...chosenInterests, filter]);
+      }
+      
+      const payload = {
+        chosenOption: filter,
+        userEmail: user?.email 
+      };
+
+      const response = await axios.post('http://localhost:5000/api/register_interest', payload);
+      console.log('POST response:', response.data);
+    } catch (error) {
+      console.error('Error sending chosen interest:', error);
+    }
   };
 
   const sortProducts = (type: string, productsToSort: Product[]) => {
@@ -115,6 +145,104 @@ const ProductsPage: React.FC = () => {
             <option value="Office">Office</option>
           </select>
         </div>
+
+        <div className="sort-options">
+          <label htmlFor="interest">Choose interest in category: </label>
+          <select onChange={(e) => sendChosenInterest(e.target.value)}>
+            <option value="">None</option>
+            <option 
+              value="Electronics" 
+              style={{ backgroundColor: chosenInterests.includes("Electronics") ? 'lightgreen' : 'white' }}
+            >
+              Electronics
+            </option>
+            <option 
+              value="Home Appliances" 
+              style={{ backgroundColor: chosenInterests.includes("Home Appliances") ? 'lightgreen' : 'white' }}
+            >
+              Home Appliances
+            </option>
+            <option 
+              value="Clothing and Apparel" 
+              style={{ backgroundColor: chosenInterests.includes("Clothing and Apparel") ? 'lightgreen' : 'white' }}
+            >
+              Clothing and Apparel
+            </option>
+            <option 
+              value="Beauty and Personal Care" 
+              style={{ backgroundColor: chosenInterests.includes("Beauty and Personal Care") ? 'lightgreen' : 'white' }}
+            >
+              Beauty and Personal Care
+            </option>
+            <option 
+              value="Health and Wellness" 
+              style={{ backgroundColor: chosenInterests.includes("Health and Wellness") ? 'lightgreen' : 'white' }}
+            >
+              Health and Wellness
+            </option>
+            <option 
+              value="Furniture" 
+              style={{ backgroundColor: chosenInterests.includes("Furniture") ? 'lightgreen' : 'white' }}
+            >
+              Furniture
+            </option>
+            <option 
+              value="Books and Stationery" 
+              style={{ backgroundColor: chosenInterests.includes("Books and Stationery") ? 'lightgreen' : 'white' }}
+            >
+              Books and Stationery
+            </option>
+            <option 
+              value="Toys and Games" 
+              style={{ backgroundColor: chosenInterests.includes("Toys and Games") ? 'lightgreen' : 'white' }}
+            >
+              Toys and Games
+            </option>
+            <option 
+              value="Automotive" 
+              style={{ backgroundColor: chosenInterests.includes("Automotive") ? 'lightgreen' : 'white' }}
+            >
+              Automotive
+            </option>
+            <option 
+              value="Sports and Outdoors" 
+              style={{ backgroundColor: chosenInterests.includes("Sports and Outdoors") ? 'lightgreen' : 'white' }}
+            >
+              Sports and Outdoors
+            </option>
+            <option 
+              value="Home and Garden" 
+              style={{ backgroundColor: chosenInterests.includes("Home and Garden") ? 'lightgreen' : 'white' }}
+            >
+              Home and Garden
+            </option>
+            <option 
+              value="Pet Supplies" 
+              style={{ backgroundColor: chosenInterests.includes("Pet Supplies") ? 'lightgreen' : 'white' }}
+            >
+              Pet Supplies
+            </option>
+            <option 
+              value="Jewelry and Accessories" 
+              style={{ backgroundColor: chosenInterests.includes("Jewelry and Accessories") ? 'lightgreen' : 'white' }}
+            >
+              Jewelry and Accessories
+            </option>
+            <option 
+              value="Consumer Services" 
+              style={{ backgroundColor: chosenInterests.includes("Consumer Services") ? 'lightgreen' : 'white' }}
+            >
+              Consumer Services
+            </option>
+            <option 
+              value="Collectibles and Antiques" 
+              style={{ backgroundColor: chosenInterests.includes("Collectibles and Antiques") ? 'lightgreen' : 'white' }}
+            >
+              Collectibles and Antiques
+            </option>
+          </select>
+        </div>
+
 
         <div className="products-grid">
           {filteredProducts.map(product => (

@@ -34,15 +34,28 @@
   cursor: pointer;
 }
 .notification-window {
-    position: absolute;
-    top: 130px;
-    right: 200px;
-    width: 300px;
-    background-color: white;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    z-index: 1000;
+  position: absolute;
+  top: 130px;
+  right: 200px;
+  width: 300px;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 1000;
+  overflow: hidden; /* Hide overflow */
+}
+
+.notification-content {
+  max-height: 300px; /* Set maximum height for scrollability */
+  overflow-y: scroll; /* Add scroll only for vertical overflow */
+}
+
+  .notification-window li{
+    border: solid 1px #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px;
   }
   .cart-window {
     position: absolute;

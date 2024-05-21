@@ -8,7 +8,10 @@ import { useUser } from "../components/UserContext";
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const { user } = useUser();
+  const paragraphStyle: React.CSSProperties = {
+    fontWeight: '900',
+    marginTop: '2%',
+  };
 
   return (
     <div className="landing-page">
@@ -22,14 +25,15 @@ const LandingPage = () => {
               Your local store with nerd stuff!
             </p>
             <ViewProducts />
-            <div className="">
+            <p style={paragraphStyle}>or maybe</p>
+            <div className="sell">
               <button
-                className="login-button"
+                className="sell-button"
                 onClick={() => {
                   navigate("/sell");
                 }}
               >
-                <p>{user?.email || "guest"}</p>
+              <p>Sell nerd stuff!</p>
               </button>
             </div>
           </div>

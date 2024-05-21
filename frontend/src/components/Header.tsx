@@ -20,9 +20,9 @@ interface HeaderProps {
 }
 
 interface Notification {
-  id: number;
+  in_id: number;
   user_id: number;
-  product_id: number;
+  name: string;
   product_type_id: number;
   message: string;
   time_stamp: string;
@@ -35,34 +35,39 @@ const Header: React.FC<HeaderProps> = ({ cartItems, removeFromCart }) => {
   const [isNotificationVisible, setNotificationVisible] = useState<boolean>(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
-
   const cartRef = useRef<HTMLDivElement>(null); // Ref for the cart window
 
   const handleTitleClick = () => {
     navigate('/landing');
   };
+
   const toggleCartVisibility = () => {
     setIsCartVisible(!isCartVisible);
   };
+
   const toggleNotificationVisibility = () => {
     setNotificationVisible(!isNotificationVisible);
     if (!isNotificationVisible) {
       getNotifications(); 
     }
   };
+
   const removeItemFromCart = (id: number) => {
     removeFromCart(id);
   };
+
   const handleClickOutside = (event: MouseEvent) => {
     if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
       setIsCartVisible(false);
     }
   };
+
   const handleClickOutsideNotification = (event: MouseEvent) => {
     if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
       setNotificationVisible(false);
     }
   };
+
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -72,48 +77,70 @@ const Header: React.FC<HeaderProps> = ({ cartItems, removeFromCart }) => {
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutsideNotification);
-  }, [notifications]);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutsideNotification);
+    };
+  }, []);
 
   const getNotifications = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/messages/' + user?.email);
-      console.log('Response:', response.data);
-      setNotifications(response.data);
+      console.log('Response:', response.data); // Check the structure of response.data
+
+      // Assuming the response data is an array of arrays
+      const messages = response.data;
+
+      if (Array.isArray(messages)) {
+        const transformedNotifications = messages.map((msg: any[]) => ({
+          in_id: msg[0],
+          user_id: msg[1],
+          name: msg[2],
+          product_type_id: msg[3],
+          message: msg[4],
+          time_stamp: msg[5],
+        }));
+        setNotifications(transformedNotifications);
+      } else {
+        console.error('API response messages is not an array:', response.data);
+        setNotifications([]); 
+      }
     } catch (error) {
       console.error('Error:', error);
+      setNotifications([]);
     }
   };
 
   return (
     <header>
-        <div className="header-content">
+      <div className="header-content">
         <h1 className="store-title" onClick={handleTitleClick} style={{ cursor: 'pointer' }}>
           NerdStore
         </h1>
         <button className="cart-button" onClick={toggleCartVisibility}>
-        <ShoppingCart />
+          <ShoppingCart />
         </button>
         <button className='notification-button' onClick={toggleNotificationVisibility}>
-        Notifications
+          Notifications
         </button>
       </div>
       <div className='cart-notifications'>
-
-      {isNotificationVisible && (
+        {isNotificationVisible && (
           <div className="notification-window" ref={cartRef}>
-            <h2>Notifications</h2>
-            {notifications.length === 0 ? (
-              <p>No notifications!</p>
-            ) : (
-              <ul>
-                {notifications.map(notification => (
-                  <li key={notification.id}>
-                    Your product {notification.product_id} has been bought by {notification.user_id} at {notification.time_stamp}.
-                    <br/> Message: {notification.message}
-                  </li>
-                ))}
-              </ul>
-            )}
+            <div className='notification-content'>
+              <h2>Notifications</h2>
+              {notifications.length === 0 ? (
+                <p>No notifications!</p>
+              ) : (
+                <ul>
+                  {notifications.map(notification => (
+                    <li key={notification.in_id}>
+                      Your product "{notification.name}" has been bought by <strong>User ID: {notification.user_id}</strong> at {notification.time_stamp}.
+                      <br/> Message: {notification.message}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
         )}
 
@@ -135,11 +162,9 @@ const Header: React.FC<HeaderProps> = ({ cartItems, removeFromCart }) => {
             <button className='checkout-btn'>Checkout</button>
           </div>
         )}
-        
       </div>
       <script src="https://kit.fontawesome.com/b636bc1f7e.js" crossOrigin="anonymous"></script>
     </header>
-    
   );
 };
 
