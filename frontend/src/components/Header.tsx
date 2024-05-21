@@ -4,6 +4,7 @@ import "../styling/LoginButton.css";
 import "../styling/Header.css";
 import { ShoppingCart } from 'lucide-react';
 import axios from 'axios';
+import { useUser } from "../components/UserContext";
 
 export interface CartItem {
   id: number;
@@ -20,13 +21,15 @@ interface HeaderProps {
 
 interface Notification {
   id: number;
+  user_id: number;
   product_id: number;
-  buyer_id: number;
+  product_type_id: number;
   message: string;
-  date: string;
+  time_stamp: string;
 }
 
 const Header: React.FC<HeaderProps> = ({ cartItems, removeFromCart }) => {
+  const { user } = useUser();
   const navigate = useNavigate();
   const [isCartVisible, setIsCartVisible] = useState<boolean>(false);
   const [isNotificationVisible, setNotificationVisible] = useState<boolean>(false);
@@ -73,7 +76,7 @@ const Header: React.FC<HeaderProps> = ({ cartItems, removeFromCart }) => {
 
   const getNotifications = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/get_notifications');
+      const response = await axios.get('http://localhost:5000/api/messages/' + user?.email);
       console.log('Response:', response.data);
       setNotifications(response.data);
     } catch (error) {
@@ -105,7 +108,7 @@ const Header: React.FC<HeaderProps> = ({ cartItems, removeFromCart }) => {
               <ul>
                 {notifications.map(notification => (
                   <li key={notification.id}>
-                    Your product {notification.product_id} has been bought by {notification.buyer_id} at {notification.date}.
+                    Your product {notification.product_id} has been bought by {notification.user_id} at {notification.time_stamp}.
                     <br/> Message: {notification.message}
                   </li>
                 ))}
