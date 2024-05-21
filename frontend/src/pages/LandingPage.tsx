@@ -2,10 +2,13 @@ import "../styling/LandingPage.css";
 import ProductList from "../components/ProductList";
 import ViewProducts from "../components/ViewProducts";
 import LoginButton from "../components/LoginButton";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../components/UserContext";
 
 const LandingPage = () => {
- 
-
+  const navigate = useNavigate();
+  const { user } = useUser();
 
   return (
     <div className="landing-page">
@@ -19,6 +22,16 @@ const LandingPage = () => {
               Your local store with nerd stuff!
             </p>
             <ViewProducts />
+            <div className="">
+              <button
+                className="login-button"
+                onClick={() => {
+                  navigate("/sell");
+                }}
+              >
+                <p>{user?.email || "guest"}</p>
+              </button>
+            </div>
           </div>
         </div>
       </main>

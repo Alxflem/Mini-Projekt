@@ -121,7 +121,7 @@ def register_product_endpoint():
         print("Invalid input")
         return jsonify({"error": "Invalid input"}), 400
 
-    required_fields = ["name", "type", "price", "image", "production_date", "color", "condition"]
+    required_fields = ["name", "type", "price", "image", "production_date", "color", "condition", "seller"]
     if not all(field in product_data for field in required_fields):
         print("Missing fields")
         return jsonify({"error": "Missing fields"}), 400
@@ -134,6 +134,7 @@ def register_product_endpoint():
         product_data["production_date"],
         product_data["color"],
         product_data["condition"],
+        product_data["seller"]
     )
 
     return jsonify(result), status
